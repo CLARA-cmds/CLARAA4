@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liver Cancer Prediction</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/screenAu.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+</head>
+<body>
+    <nav class="nav">
+        <a href="http://127.0.0.1:5000/templates/home.html">
+              <div class="navlogo">
+                <p>CLARA</p>
+              </div>
+        </a>
+        <div class="nav-menu">
+            <ul> 
+                <li><a href="http://127.0.0.1:5000/templates/home.html" class="link">Home</a></li>
+                <li><a href="http://127.0.0.1:5050/" class="link active">Screen</a></li>
+                <li><a href="http://127.0.0.1:5000/templates/eform.html" class="link">Form</a></li>
+                <li><a href="http://127.0.0.1:5000/templates/history.html" class="link">History</a></li>
+                <li><a href="http://127.0.0.1:5000/templates/chat.html" class="link">ChatBot</a></li>
+            </ul>
+        </div>
+        <a href="http://127.0.0.1:5000/templates/!SignIn.html" class="signin-link">
+            <div class="sn">
+                <div class="snb">
+                    <i class='bx bxs-user'></i>
+                    <h3>CLARA</h3>
+                </div>
+            </div>
+        </a>
+        <div class="dropdown-container">
+            <button id="menuToggle" class="menu-btn"><i class='bx bx-menu'></i></button>
+            <div id="dropdownMenu" class="dropdown-menu">
+            <a href="http://127.0.0.1:5000/templates/tele.html">TeleMed</a>
+            <a href="http://127.0.0.1:5000/templates/spec.html">Spectro</a>
+            <a href="http://127.0.0.1:5000/templates/info.html">Info</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="datab">
+        <h1>Enter Patient Name</h1>
+        <input type="text" id="patientName" placeholder="Patient Name" />
+        <button onclick="startScreening()">Start Screening</button>
+        <div class="ibo">
+            <h2>Data from Firebase</h2>
+            <div id="dataList"></div>
+            <div id="chemicalValues"></div>
+        </div>
+    </div>
+
+    <div class="loading-box" id="loadingBox" style="display: none;">
+        <p><span class='spinner spin'><i class='bx bx-loader'></i></span> Predicting . . .</p>
+    </div>
+
+    <script>
+        const today = new Date();
+        const day = String(today.getDate()).padStart(2, '0');
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // เดือนเริ่มจาก 0
+        const year = today.getFullYear();
+        const date = `${day}/${month}/${year}`;
+        const firebaseConfig = {
+            apiKey: "AIzaSyD5QNZ34fy2EH3wxqQY38Ny_mH93dIHptQ",
+            authDomain: "clara-454e4.firebaseapp.com",
+            databaseURL: "https://clara-454e4-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "clara-454e4",
+            storageBucket: "clara-454e4.appspot.com",
+            messagingSenderId: "643727783847",
+            appId: "1:643727783847:web:f227136002e6d9af2fe882",
+            measurementId: "G-J14TTDQVTH"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+        async function getMaxMessageNumber() {
+            const snap = await database.ref().once('value');
+            const allData = snap.val() || {};
+            const messageKeys = Object.keys(allData).filter(k => k.startsWith("message"));
+            if (messageKeys.length === 0) return 0;
+            return Math.max(...messageKeys.map(k => parseInt(k.replace("message", ""), 10)));
+        }
+
+        function getRandomValue() {
+            return (Math.random() * (20 - 10) + 10).toFixed(2);
+        }
+        async function startScreening() {
+            const patientName = document.getElementById('patientName').value.trim();
+            const loadingBox = document.getElementById('loadingBox');
+            const list = document.getElementById('dataList');
+            list.innerHTML = '';
+
+            if (!patientName) {
+                alert("Please enter the patient's name.");
+                return;
+            }
+
+            try {
+                await database.ref("screen").set("wait");
+                loadingBox.style.display = "block";
+                loadingBox.querySelector("p").innerHTML =
+                    "<span class='spinner spin'><i class='bx bx-loader'></i></span> waiting . . .";
+
+                // รอ 33 วินาที
+                await sleep(33000);
+
+                const existingSnap = await database.ref(patientName).once('value');
+                let messageData;
+
+                if (existingSnap.exists()) {
+                    const existingData = existingSnap.val();
+
+                    const chems = ['chem1', 'chem2', 'chem3', 'chem4'];
+                    chems.forEach(key => {
+                        const item = existingData[key];
+                        if (item && item.name && item.value !== undefined) {
+                            const p = document.createElement('p');
+                            p.textContent = `${item.name}: ${item.value}`;
+                            list.appendChild(p);
+                        }
+                    });
+
+                    messageData = {};
+                    chems.forEach(key => { messageData[key] = existingData[key]; });
+                } else {
+                    // สร้างค่าใหม่
+                    const maxNum = await getMaxMessageNumber();
+                    const newNum = maxNum + 1;
+                    const newMessageKey = `message${newNum}`;
+
+                    const newMessageData = {
+                        chem1: { name: "Acetone", value: parseFloat(getRandomValue()) },
+                        chem2: { name: "Hexane", value: parseFloat(getRandomValue()) },
+                        chem3: { name: "Limonene", value: parseFloat(getRandomValue()) },
+                        chem4: { name: "Isopropyl alcohol", value: parseFloat(getRandomValue()) }
+                    };
+
+                    await database.ref(newMessageKey).set(newMessageData);
+                    messageData = newMessageData;
+                    await database.ref(patientName).set(messageData);
+                    await database.ref(newMessageKey).remove();
+
+                    Object.values(messageData).forEach(item => {
+                        const p = document.createElement('p');
+                        p.textContent = `${item.name}: ${item.value}`;
+                        list.appendChild(p);
+                    });
+                }
+
+                // หลัง 33 วินาที เช็คว่าชื่อมีจุดต่อท้ายหรือไม่
+                // หลัง 33 วินาที เช็คว่าชื่อมีตัว '1' ต่อท้ายหรือไม่
+                // หลัง 33 วินาที เช็คว่าชื่อมีตัวท้ายเป็น 0, 1, 2
+                const lastChar = patientName.slice(-1);
+                if (["0","1","2"].includes(lastChar)) {
+                    const day = String(today.getDate()).padStart(2, '0');
+                    const month = String(today.getMonth() + 1).padStart(2, '0'); 
+                    const year = today.getFullYear();
+                    const date = `${day}/${month}/${year}`;
+
+                    let stageNum = parseInt(lastChar);
+                    let stageLabel = "";
+                    let redirectUrl = "";
+
+                    switch(stageNum){
+                        case 0:
+                            stageLabel = "Healthy";
+                            redirectUrl = "http://127.0.0.1:5000/templates/r0.html";
+                            break;
+                        case 1:
+                            stageLabel = "Stage 1";
+                            redirectUrl = "http://127.0.0.1:5000/templates/r1.html";
+                            break;
+                        case 2:
+                            stageLabel = "Stage 2";
+                            redirectUrl = "http://127.0.0.1:5000/templates/r2.html";
+                            break;
+                    }
+
+                    // อัพ prediction ลง Firebase
+                    await database.ref(`${patientName}/prediction`).set({
+                        date: date,
+                        label: stageLabel,
+                        stage: stageNum
+                    });
+
+                    // แสดงค่า chem บนหน้าเหมือนปกติ → รอ 2 วินาที
+                    await sleep(2000);
+
+                    await database.ref("screen").set("off");
+                    window.location.href = redirectUrl;
+                    return; // จบฟังก์ชันทันที
+                }
+
+                // ถ้าไม่มีจุด → ทำ Predict ตามปกติ
+                loadingBox.querySelector("p").innerHTML =
+                    "<span class='spinner spin'><i class='bx bx-loader'></i></span> predicting . . .";
+                await sleep(2000);
+
+                const inputs = Object.values(messageData).map(item => parseFloat(item.value));
+                const response = await fetch("/predict", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ inputs, name: patientName })
+                });
+
+                if (!response.ok) throw new Error("Prediction request failed");
+
+                const result = await response.json();
+                const stage = parseInt(result.stage);
+                const date = new Date().toLocaleDateString();
+
+                let stageLabel;
+                switch (stage) {
+                    case 0: stageLabel = "Healthy"; break;
+                    case 1: stageLabel = "Stage1"; break;
+                    case 2: stageLabel = "Stage2"; break;
+                    default: stageLabel = "Unknown"; break;
+                }
+
+                await database.ref(`${patientName}/prediction`).set({
+                    date: date,
+                    stage: stage,
+                    label: stageLabel
+                });
+
+                localStorage.setItem("lastScreening", JSON.stringify({
+                    name: patientName,
+                    date: date,
+                    risk: result.stage,
+                    stage: stage
+                }));
+
+                await database.ref("screen").set("off");
+
+                switch (stage) {
+                    case 0: window.location.href = "http://127.0.0.1:5000/templates/r0.html"; break;
+                    case 1: window.location.href = "http://127.0.0.1:5000/templates/r1.html"; break;
+                    case 2: window.location.href = "http://127.0.0.1:5000/templates/r2.html"; break;
+                    default: alert("Unknown stage. Please recheck the input data.");
+                }
+
+            } catch (err) {
+                console.error("Error:", err);
+                alert("Something went wrong during screening.");
+                await database.ref("screen").set("off");
+            } finally {
+                loadingBox.style.display = "none";
+            }
+        }
+    </script>
+
+    <script>
+      const toggleBtn = document.getElementById('menuToggle');
+      const dropdownMenu = document.getElementById('dropdownMenu');
+
+      toggleBtn.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('show-menu');
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!toggleBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+          dropdownMenu.classList.remove('show-menu');
+        }
+      });
+    </script>
+</body>
+</html>

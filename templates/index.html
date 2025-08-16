@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liver Cancer Prediction</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+
+    <div class="wrapper">
+        <nav class="nav">
+            <a href="http://127.0.0.1:5000/templates/home.html">
+              <div class="navlogo">
+                <p>CLARA</p>
+              </div>
+            </a>
+            <div class="nav-menu">
+              <ul>
+                <li><a href="http://127.0.0.1:5000/templates/home.html" class="link">Home</a></li>
+                <li><a href="#" class="link active">Screen</a></li>
+                <li><a href="http://127.0.0.1:5000/templates/eform.html" class="link">Form</a></li>
+                <li><a href="http://127.0.0.1:5000/templates/history.html" class="link">History</a></li>
+                <li><a href="http://127.0.0.1:5000/templates/chat.html" class="link">ChatBot</a></li>
+              </ul>
+            </div>
+            <a href="!SignIn.html" class="signin-link">
+              <div class="sn">
+                <div class="snb">
+                  <i class='bx bxs-user'></i>
+                  <h3>CLARA</h3>
+                </div>
+              </div>
+            </a>
+            <div class="dropdown-container">
+              <button id="menuToggle" class="menu-btn"><i class='bx bx-menu'></i></button>
+              <div id="dropdownMenu" class="dropdown-menu">
+                <a href="http://127.0.0.1:5000/templates/tele.html">TeleMed</a>
+                <a href="http://127.0.0.1:5000/templates/spec.html">Spectro</a>
+                <a href="http://127.0.0.1:5000/templates/info.html">Info</a>
+              </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="form-box">
+                <h1>Liver Cancer Stage Prediction</h1>
+                <h3>Please enter VOCs values</h3>
+                <form id="predictionForm">
+                    <label for="input1">Acetone:</label>
+                    <label for="input2">Hexane:</label>
+                    <input type="number" id="input1" step="any" required>
+                    <input type="number" id="input2" step="any" required>
+
+                    <label for="input3">Limonene:</label>
+                    <label for="input4">Isopropyl alcohol:</label>
+                    <input type="number" id="input3" step="any" required>
+                    <input type="number" id="input4" step="any" required>
+
+                    <button type="submit" class="submit">Predict</button>
+                </form>
+                <div id="loading">
+                    <i class='bx bx-loader bx-spin'></i> Predicting . . .
+                </div>
+                <p id="result"></p>
+            </div>
+        </div>
+        <a href="http://127.0.0.1:5050/screenAu">
+            <div class="switch">
+                <h3>AutoInput</h3>
+                <p><img src="https://i.ibb.co/tpFbCQrZ/auto-2.png" alt="Healthy" width="100px"/></p>
+                <img>
+            </div>
+        </a>
+    </div>
+    <script>
+      const toggleBtn = document.getElementById('menuToggle');
+      const dropdownMenu = document.getElementById('dropdownMenu');
+
+      toggleBtn.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('show-menu');
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!toggleBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+          dropdownMenu.classList.remove('show-menu');
+        }
+      });
+    </script>
+    <script src="../static/script.js"></script>
+</body>
+</html>

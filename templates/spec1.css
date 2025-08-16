@@ -1,0 +1,292 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body {
+    font-family: sans-serif;
+    padding-top: 125px;
+    background: linear-gradient(to bottom right, #f0f4f8, #ffffff);
+    overflow-x: hidden;
+    text-align: center;
+}
+
+#videoControlWrapper {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px auto;
+    max-width: 1300px;
+}
+
+#videoContainer {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #e0e0e0;
+    background-color: #ffffff;
+}
+
+video, #overlay {
+    width: 640px;
+    height: 480px;
+}
+
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+#controls {
+    width: 650px;
+    height: 480px; /* Adjust height if needed for new buttons */
+    padding: 20px;
+    background-color: #f8fbff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+    margin: 0;
+    display: flex; /* Use flexbox for better layout of buttons */
+    flex-wrap: wrap; /* Allow buttons to wrap to next line */
+    align-content: flex-start; /* Align content to the start */
+    justify-content: center; /* Center buttons horizontally */
+}
+
+/* ปุ่ม */
+#controls button,
+#toggleCamBtn,
+#exportCsvBtn,
+#applyBtn,
+#captureReferenceBtn, /* New */
+#calculateAbsorptionBtn /* New */ {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 5px 8px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#controls button:hover,
+#toggleCamBtn:hover,
+#exportCsvBtn:hover,
+#applyBtn:hover,
+#captureReferenceBtn:hover, /* New */
+#calculateAbsorptionBtn:hover /* New */ {
+    background-color: #0056b3;
+}
+
+
+/* Label และ Input */
+#controls label {
+    display: inline-block;
+    margin: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+#controls input[type="number"] {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 80px;
+    font-size: 14px;
+}
+
+/* ปรับหัวเรื่องหลัก */
+h1 {
+    text-align: center;
+    color: #004080;
+    font-size: 32px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+#chart {
+    width: 100%;
+    max-width: 1280px;
+    height: 600px;
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+#spectrumChart {
+    width: 100% !important;
+    height: 600px !important;
+    background-color: #051538;
+}
+
+input {
+    width: 60px;
+    margin: 4px;
+}
+
+label {
+    margin-right: 10px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 60px;
+  height: 80px;
+  background-color: rgba(4, 14, 46, 0.788);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.navlogo p {
+  color: #FFB000;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.nav-menu ul {
+  display: flex;
+  list-style-type: none;
+  gap: 100px;
+}
+
+.nav-menu ul li .link {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.link:hover,
+.active {
+  color: white;
+}
+
+.link.active::after,
+.link:hover::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  border-radius: 2px;
+}
+
+.sn {
+  display: flex;
+  align-items: center;
+  border: 2px solid white;
+  border-radius: 20px;
+  padding: 5px 15px;
+}
+
+.snb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.snb i {
+  color: white;
+  font-size: 22px;
+}
+
+.snb h3 {
+  font-weight: 500;
+  color: white;
+}
+
+/* Dropdown menu */
+.dropdown-container {
+  text-align: left;
+  position: absolute;
+  right: 17px;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  display: none;
+  flex-direction: column;
+  min-width: 160px;
+  padding: 10px 0;
+  z-index: 1001;
+}
+
+.dropdown-menu a {
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #092e50;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f0f4f8;
+}
+
+.show-menu {
+  display: flex;
+}
+
+a[href="!SignIn.html"] {
+  text-decoration: none;
+}
+
+.link:hover,
+.active {
+  color: white;
+}
+
+.link.active::after,
+.link:hover::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  border-radius: 2px;
+}
+
+a[href="!SignIn.html"],
+a[href="home.html"] {
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+a[href="!SignIn.html"]:hover,
+a[href="!SignIn.html"]:active,
+a[href="home.html"]:hover,
+a[href="home.html"]:active {
+  text-decoration: none;
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+

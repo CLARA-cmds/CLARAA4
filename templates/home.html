@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="home.css" />
+  <title>CLARA_WEB</title>
+</head>
+   <nav class="nav">
+    <a href="home.html">
+      <div class="navlogo">
+      <p>CLARA</p>
+      </div>
+    </a>
+    <div class="nav-menu">
+      <ul>
+        <li><a href="#" class="link active">Home</a></li>
+        <li><a href="http://127.0.0.1:5050/" class="link">Screen</a></li>
+        <li><a href="http://127.0.0.1:5000/templates/eform.html" class="link">Form</a></li>
+        <li><a href="http://127.0.0.1:5000/templates/history.html" class="link">History</a></li>
+        <li><a href="http://127.0.0.1:5000/templates/chat.html" class="link">ChatBot</a></li>
+      </ul>
+    </div>
+
+    <a href="!SignIn.html">
+      <div class="sn">
+        <div class="snb">
+          <i class='bx bxs-user'></i>
+          <h3>CLARA</h3>
+        </div>
+      </div>
+    </a>
+
+    <!-- เพิ่มปุ่มเมนูด้านขวา -->
+    <div class="dropdown-container">
+      <button id="menuToggle" class="menu-btn"><i class='bx bx-menu'></i></button>
+      <div id="dropdownMenu" class="dropdown-menu">
+        <a href="http://127.0.0.1:5000/templates/tele.html">TeleMed</a>
+        <a href="http://127.0.0.1:5000/templates/spec.html">Spectro</a>
+        <a href="http://127.0.0.1:5000/templates/info.html">Info</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="main-section">
+    <div class="box-wrapper">
+      <div class="side-box">
+        <h2>History</h2>
+        <i class='bx bxs-time' ></i>
+        <p>View past screenings and results.</p>
+        <a href="http://127.0.0.1:5000/templates/history.html" class="btn-small">View</a>
+      </div>
+
+      <div class="text-box">
+        <h1>AI Liver Cancer Screening</h1>
+        <div class="emo">
+          <i class='bx bxs-first-aid'></i>
+          <i class='bx bxs-heart'></i>
+          <i class='bx bxs-injection'></i>
+        </div>
+        <p>Early Detection & Risk Assessment Powered by Artificial Intelligence</p>
+        <a href="http://127.0.0.1:5050/" class="btn-screen">Screen Now</a>
+      </div>
+
+      <div class="side-box">
+        <h2>Information</h2>
+        <i class='bx bxs-info-circle'></i>
+        <p>Learn more about liver cancer and prevention.</p>
+        <a href="http://127.0.0.1:5000/templates/info.html" class="btn-small">Explore</a>
+      </div>    
+    </div>
+  </section>
+
+  <div class="footer">
+    <h3>CONTACT US</h3>
+    <h3>|</h3>
+    <a href="https://www.youtube.com/watch?v=LWI6iCHuSKQ">
+      <div class="mail">
+        <i class='bx bxl-youtube'></i>
+        <span>CLARSA-PRC-GC</span>
+      </div>
+    </a>
+    <div class="mail">
+      <i class='bx bxl-gmail' alt="Gmail"></i>
+      <span>clarsaprcgc@gmail.com</span>
+    </div>
+    <div class="mail">
+      <i class='bx bxs-phone'alt="phone"></i>
+      <span>+66-95-931-6581</span>
+    </div>
+  </div>  
+
+  <script>
+    const toggleBtn = document.getElementById('menuToggle');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    toggleBtn.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('show-menu');
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!toggleBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        dropdownMenu.classList.remove('show-menu');
+      }
+    });
+  </script>
+</body>
+</html>

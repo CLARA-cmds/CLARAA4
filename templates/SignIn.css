@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgb(9, 30, 80);
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Fade-in effect */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cover {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.form-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 700px;
+    height: 500px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    
+    /* Floating animation */
+    animation: floatUpDown 3s ease-in-out infinite alternate;
+}
+
+@keyframes floatUpDown {
+    from {
+        transform: translateY(-5px);
+    }
+    to {
+        transform: translateY(5px);
+    }
+}
+
+.register-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    color: rgb(9, 30, 80);
+    font-size: 32px;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.logo {
+    display: flex;
+    flex-direction: row;
+}
+
+.ilog{
+    position: absolute;
+    left: 180px;
+    top: -5px;
+}
+
+.input-box {
+    position: relative;
+    width: 80%;
+    margin: 10px 0;
+}
+
+.input-box p {
+    position: absolute;
+    bottom: -20px;
+    left: 50px;
+    color: red;
+    font-size: 14px;
+    display: none;
+}
+
+.input-field {
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.2);
+    color: rgb(9, 30, 80);
+    height: 50px;
+    width: 100%;
+    padding: 0 15px 0 50px;
+    border: 1px solid rgba(9, 30, 80, 0.5);
+    border-radius: 25px;
+    outline: none;
+    transition: 0.3s ease-in-out;
+}
+
+/* Ensure icons remain visible when typing */
+.input-box i {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: rgb(9, 30, 80);
+    font-size: 20px;
+    pointer-events: none;
+}
+
+/* Input focus effect */
+.input-field:focus {
+    background: rgba(14, 67, 189, 0.1);
+    box-shadow: 0px 0px 10px rgba(14, 67, 189, 0.5);
+    transform: scale(1.02);
+}
+
+.submit {
+    font-size: 18px;
+    font-weight: 500;
+    color: rgb(9, 30, 80);
+    background: white;
+    height: 50px;
+    width: 80%;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    margin-top: 5px;
+    margin-left: 10%;
+    outline: none;
+}
+
+/* Button hover effect */
+.submit:hover {
+    background: rgba(9, 30, 80, 0.1);
+    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.2);
+    animation: bounce 0.3s ease-in-out;
+}
+
+/* Button bounce animation */
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+    100% { transform: translateY(0); }
+}
+
+.two-col {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    color: rgb(9, 30, 80);
+    font-size: small;
+    margin-top: 10px;
+}
+
+.two-col .one {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.two label a {
+    text-decoration: none;
+    color: rgb(9, 30, 80);
+}
+
+.two label a:hover {
+    text-decoration: underline;
+}
+
+.cover h1{
+    color: #FFB000;
+   font-size: 50px;
+}

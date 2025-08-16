@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="tele3.css" />
+  <title>CLARA_WEB</title>
+</head>
+   <nav class="nav">
+    <a href="home.html">
+      <div class="navlogo">
+      <p>CLARA</p>
+      </div>
+    </a>
+    <div class="nav-menu">
+      <ul>
+        <li><a href="http://127.0.0.1:5000/templates/home.html" class="link">Home</a></li>
+        <li><a href="http://127.0.0.1:5050/" class="link">Screen</a></li>
+        <li><a href="http://127.0.0.1:5000/templates/eform.html" class="link">Form</a></li>
+        <li><a href="http://127.0.0.1:5000/templates/history.html" class="link">History</a></li>
+        <li><a href="http://127.0.0.1:5000/templates/chat.html" class="link">ChatBot</a></li>
+        <li><a href="http://127.0.0.1:5000/templates/tele.html" class="link active">TeleMed</a></li>
+      </ul>
+    </div>
+
+    <a href="!SignIn.html">
+      <div class="sn">
+        <div class="snb">
+          <i class='bx bxs-user'></i>
+          <h3>CLARA</h3>
+        </div>
+      </div>
+    </a>
+
+    <!-- เพิ่มปุ่มเมนูด้านขวา -->
+    <div class="dropdown-container">
+      <button id="menuToggle" class="menu-btn"><i class='bx bx-menu'></i></button>
+      <div id="dropdownMenu" class="dropdown-menu">
+        <a href="http://127.0.0.1:5000/templates/tele.html">TeleMed</a>
+        <a href="http://127.0.0.1:5000/templates/spec.html">Spectro</a>
+        <a href="http://127.0.0.1:5000/templates/info.html">Info</a>
+      </div>
+    </div>
+  </nav>
+  <main>
+    <h1>Search for Specialists</h1>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search for Specialists or branches" />
+      <i class='bx bx-search'></i>
+    </div>
+
+    <!-- กล่องแพทย์ที่เลื่อนได้ -->
+    <div class="doctor-container">
+      <ul id="doctorList" class="doctor-list">
+        <li class="doctor-item">
+          <img src="https://i.postimg.cc/pTMVrGH6/image.png" alt="Dr. Orapin Tanapanpanit"/>
+          <div class="doctor-info">
+            <p class="doctor-name">Dr. Orapin Tanapanpanit</p>
+            <p class="doctor-specialty">Gastroenterology & Hepatology</p>
+            <p class="doctor-location">Bumrungrad International Hospital</p>
+          </div>
+        </li>
+
+        <li class="doctor-item">
+          <img src="https://i.postimg.cc/L8T65BX9/image.png" alt="Dr. Rawisak Chanwat" />
+          <div class="doctor-info">
+            <p class="doctor-name">Dr. Rawisak Chanwat</p>
+            <p class="doctor-specialty">Hepato-Pancreato-Biliary Surgery</p>
+            <p class="doctor-location">Bumrungrad International Hospital</p>
+          </div>
+        </li>
+
+        <li class="doctor-item">
+          <img src="https://i.postimg.cc/90v7QPLX/image.png" alt="Dr. Veerakit Apiratprachasin" />
+          <div class="doctor-info">
+            <p class="doctor-name">Dr. Veerakit Apiratprachasin</p>
+            <p class="doctor-specialty">Gastrointestinal & Liver Diseases</p>
+            <p class="doctor-location">Bumrungrad International Hospital</p>
+          </div>
+        </li>
+
+        <li class="doctor-item">
+          <img src="https://i.postimg.cc/C1Cvp17Q/image.png" alt="Assoc. Prof. Thun Ingkakul" />
+          <div class="doctor-info">
+            <p class="doctor-name">Assoc. Prof. Thun Ingkakul</p>
+            <p class="doctor-specialty">Hepato-Pancreato-Biliary Surgery</p>
+            <p class="doctor-location">Bangkok Hospital</p>
+          </div>
+        </li>
+
+        <li class="doctor-item">
+          <img src="https://pbs.twimg.com/profile_images/1813974761149693952/1f6Zu0mt_400x400.jpg" alt="Dr. Natwutpong Leeratanakachorn" />
+          <div class="doctor-info">
+            <p class="doctor-name">Dr. Natwutpong Leeratanakachorn</p>
+            <p class="doctor-specialty">Hepato-Pancreato-Biliary Surgery</p>
+            <p class="doctor-location">Vejthani Hospital</p>
+          </div>
+        </li>
+
+        <li class="doctor-item">
+          <img src="https://s3vmwebprd.s3.ap-southeast-1.amazonaws.com/public/doctors/owMbYM8MLzdqoSXB24d4JqAu3P7LmkiB5YptffMw.png" alt="Dr. Anundorn Wongteerasut" style="width:72px;height:72px;background-color: rgb(247, 246, 244);" />
+          <div class="doctor-info">
+            <p class="doctor-name">Dr. Anundorn Wongteerasut</p>
+            <p class="doctor-specialty">Gastroenterology & Hepatology</p>
+            <p class="doctor-location">Piyavate Hospital</p>
+          </div>
+        </li>
+
+        <li class="doctor-item">
+          <img src="https://siph-space.sgp1.digitaloceanspaces.com/uploads%2Fprofile%2F1746009058_%E0%B8%A3%E0%B8%A8.-%E0%B8%99%E0%B8%9E.-%E0%B9%80%E0%B8%A7%E0%B8%98%E0%B8%B4%E0%B8%95-%E0%B8%94%E0%B8%B3%E0%B8%A3%E0%B8%87%E0%B8%81%E0%B8%B4%E0%B8%95%E0%B8%95%E0%B8%B4%E0%B8%81%E0%B8%B8%E0%B8%A5.jpg" alt="Assoc. Prof. Wethit Dumronggittigule" />
+          <div class="doctor-info">
+            <p class="doctor-name">Assoc. Prof. Wethit Dumronggittigule</p>
+            <p class="doctor-specialty">HPB Surgery & Liver Transplantation</p>
+            <p class="doctor-location">Siriraj Hospital</p>
+          </div>
+        </li>
+
+        <li class="doctor-item">
+          <img src="https://siph-space.sgp1.digitaloceanspaces.com/uploads%2Fprofile%2F1752058669_%E0%B8%AD._%E0%B8%99%E0%B8%9E.%E0%B8%9E%E0%B8%A5%E0%B8%AA%E0%B8%B4%E0%B8%97%E0%B8%98%E0%B8%B4%E0%B9%8C_%E0%B9%81%E0%B8%AA%E0%B8%87%E0%B9%80%E0%B8%AA%E0%B8%A3%E0%B8%B5%E0%B8%AA%E0%B8%96%E0%B8%B4%E0%B8%95.png" alt="Dr. Polsith Sangserisatit" />
+          <div class="doctor-info">
+            <p class="doctor-name">Dr. Polsith Sangserisatit</p>
+            <p class="doctor-specialty">HPB Surgery</p>
+            <p class="doctor-location">Siriraj Hospital</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </main>
+
+  <script>
+    // ฟังก์ชันกรองรายชื่อแพทย์ตาม input
+    const searchInput = document.getElementById('searchInput');
+    const doctorList = document.getElementById('doctorList');
+    const doctors = Array.from(doctorList.getElementsByClassName('doctor-item'));
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase().trim();
+
+      doctors.forEach(doc => {
+        const name = doc.querySelector('.doctor-name').textContent.toLowerCase();
+        const specialty = doc.querySelector('.doctor-specialty').textContent.toLowerCase();
+        const location = doc.querySelector('.doctor-location').textContent.toLowerCase();
+
+        if (name.includes(query) || specialty.includes(query) || location.includes(query)) {
+          doc.style.display = '';
+        } else {
+          doc.style.display = 'none';
+        }
+      });
+    });
+  </script>
+  <script>
+    const toggleBtn = document.getElementById('menuToggle');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    toggleBtn.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('show-menu');
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!toggleBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        dropdownMenu.classList.remove('show-menu');
+      }
+    });
+  </script>
+</body>
+</html>

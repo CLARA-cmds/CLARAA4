@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liver Cancer Prediction</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/styler.css">
+</head>
+<body>
+
+    <div class="wrapper">
+        <nav class="nav">
+            <a href="http://127.0.0.1:5000/templates/home.html">
+                <div class="navlogo">
+                <p>CLARA</p>
+                </div>
+            </a>
+            <div class="nav-menu">
+                <ul> 
+                    <li><a href="home.html" class="link">Home</a></li>
+                    <li><a href="http://127.0.0.1:5050/" class="link active">Screen</a></li>
+                    <li><a href="http://127.0.0.1:5000/templates/eform.html" class="link">Form</a></li>
+                    <li><a href="http://127.0.0.1:5000/templates/history.html" class="link">History</a></li>
+                    <li><a href="http://127.0.0.1:5000/templates/info.html" class="link">Information</a></li>
+                </ul>
+            </div>
+            <a href="http://127.0.0.1:5000/templates/!SignIn.html" class="signin-link">
+                <div class="sn">
+                    <div class="snb">
+                        <i class='bx bxs-user'></i>
+                        <h3>Clara</h3>
+                    </div>
+                </div>
+            </a>
+            <div class="dropdown-container">
+                <button id="menuToggle" class="menu-btn"><i class='bx bx-menu'></i></button>
+                <div id="dropdownMenu" class="dropdown-menu">
+                    <a href="http://127.0.0.1:5000/templates/tele.html">TeleMed</a>
+                    <a href="http://127.0.0.1:5000/templates/spec.html">Spectro</a>
+                    <a href="http://127.0.0.1:5000/templates/info.html">Info</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container">
+        <div class="form-box">
+            <h1 style="color: #28a745;">Result : Great liver!</h1>
+            <h3 style="color: #28a745;">No sign of liver cancer detected!</h3>
+            <p></p>
+            <div class="img0"><img src="https://i.ibb.co/hxQ3KJMw/stage0.png" alt="Stage0" width="425px"/></div>
+            <div class="img1"><img src="stg0.png" alt="Stage0" width="375px"/></div>
+        </div>
+    </div>
+
+    <a href="http://127.0.0.1:5050/">
+        <div class="box">
+            <h2>Back to screen</h2>
+            <p><img src="https://i.ibb.co/PZzXTd3j/health-screening.png" alt="Stage1" width="100px"/></p>
+        </div>
+    </a>
+    
+    <a href="http://127.0.0.1:5000/templates/info.html">
+        <div class="binfo">
+            <h2>Information</h2>
+            <p><img src="https://i.ibb.co/SXdgR668/information.png" alt="Stage1" width="100px"/></p>
+        </div>
+    </a>
+    <a href="http://127.0.0.1:5000/templates/tele.html">
+        <div class="bmed">
+            <h2>Telemedicine</h2>
+            <p><img src="https://i.ibb.co/mrrfJ2c1/doctor.png" alt="Stage1" width="80px"/></p>
+        </div>
+    </a>
+    <script>
+        const toggleBtn = document.getElementById('menuToggle');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        toggleBtn.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('show-menu');
+        });
+
+        document.addEventListener('click', (event) => {
+        if (!toggleBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+            dropdownMenu.classList.remove('show-menu');
+        }
+        });
+    </script>
+</body>
+</html>

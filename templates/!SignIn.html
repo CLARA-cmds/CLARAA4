@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="SignIn.css">
+    <title>CLARA❤️‍🩹</title>
+</head>
+<body>
+    <div class="cover">
+        <div class="logo">
+            <h1>CLARA</h1>
+            <img src="https://i.ibb.co/MyPyrbNG/WELCOME-1.png" alt="HTML" style="width:116.125px;height:70.375px;" class="ilog">
+        </div>
+        <div class="form-box">
+            <div class="register-container">
+                <div class="top">
+                    <header>Sign In</header>
+                </div>
+                <div class="input-box">
+                    <i class="bx bx-envelope"></i>
+                    <input type="text" id="email" class="input-field" placeholder="Email or Username">
+                    <p id="email-error" style="color: red; font-size: 14px; display: none;">Invalid email or username</p>
+                </div>
+                <div class="input-box">
+                    <i class="bx bx-lock-alt"></i>
+                    <input type="password" id="password" class="input-field" placeholder="Password">
+                    <p id="password-error" style="color: red; font-size: 14px; display: none;">Wrong password</p>
+                </div>
+                <div class="input-box">
+                    <input type="submit" class="submit" value="Sign In" onclick="validateLogin()">
+                </div>
+                <div class="two-col">
+                    <div class="one">
+                        <input type="checkbox" id="register-check">
+                        <label for="register-check">Remember Me</label>
+                    </div>
+                    <div class="two">
+                        <label><a href="#">Terms & Conditions</a></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("email").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                document.getElementById("password").focus();
+            }
+        });
+
+        document.getElementById("password").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                validateLogin();
+            }
+        });
+
+        function validateLogin() {
+            var correctEmail = "Clara";
+            var correctPassword = "123456";
+            var emailInput = document.getElementById("email").value;
+            var passwordInput = document.getElementById("password").value;
+            var emailError = document.getElementById("email-error");
+            var passwordError = document.getElementById("password-error");
+
+            emailError.style.display = "none";
+            passwordError.style.display = "none";
+
+            if (emailInput !== correctEmail) {
+                emailError.style.display = "block";
+                return;
+            }
+
+            if (passwordInput !== correctPassword) {
+                passwordError.style.display = "block";
+                return;
+            }
+
+            window.location.href = "home.html";
+        }
+    </script>
+</body>
+</html>

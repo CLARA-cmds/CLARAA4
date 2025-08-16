@@ -1,0 +1,302 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: linear-gradient(to bottom right, #f0f4f8, #ffffff);
+  overflow: hidden; /* 🔹 ปิดการเลื่อนทั้งหน้า */
+  height: 100vh; /* เต็มหน้าจอ */
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 60px;
+  height: 80px;
+  background-color: rgba(4, 14, 46, 0.788);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.navlogo p {
+  color: #FFB000;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.nav-menu ul {
+  display: flex;
+  list-style-type: none;
+  gap: 100px;
+}
+
+.nav-menu ul li .link {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.link:hover,
+.active {
+  color: white;
+}
+
+.link.active::after,
+.link:hover::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  border-radius: 2px;
+}
+
+.sn {
+  display: flex;
+  align-items: center;
+  border: 2px solid white;
+  border-radius: 20px;
+  padding: 5px 15px;
+}
+
+.snb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.snb i {
+  color: white;
+  font-size: 22px;
+}
+
+.snb h3 {
+  font-weight: 500;
+  color: white;
+}
+
+/* Dropdown menu */
+.dropdown-container {
+  position: absolute;
+  right: 17px;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  display: none;
+  flex-direction: column;
+  min-width: 160px;
+  padding: 10px 0;
+  z-index: 1001;
+}
+
+.dropdown-menu a {
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #092e50;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f0f4f8;
+}
+
+.show-menu {
+  display: flex;
+}
+
+a[href="!SignIn.html"] {
+  text-decoration: none;
+}
+
+a[href="home.html"] {
+  text-decoration: none;
+}
+
+a[href="!SignIn.html"],
+a[href="home.html"] {
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+a[href="!SignIn.html"]:hover,
+a[href="!SignIn.html"]:active,
+a[href="home.html"]:hover,
+a[href="home.html"]:active {
+  text-decoration: none;
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+/* Main content */
+main {
+  max-width: 900px;
+  margin: 120px auto 40px;
+  background: white;
+  padding: 2rem 3rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(4, 14, 46, 0.15);
+  color: #092e50;
+  height: calc(100vh - 160px);
+  display: flex;
+  flex-direction: column;
+}
+
+main h1 {
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #092e50; /* ใช้สีโทนเดียวกับ navlogo */
+}
+
+.search-box {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding-bottom: 1rem;
+  z-index: 5; /* ให้ซ้อนอยู่บน doctor list */
+}
+
+.search-box input {
+  width: 100%;
+  padding: 0.75rem 3rem 0.75rem 1rem;
+  font-size: 1.125rem;
+  border-radius: 10px;
+  border: 2px solid #092e50;
+  transition: border-color 0.3s ease;
+  color: #092e50;
+}
+
+.search-box input::placeholder {
+  color: #aaa;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: #092e50;
+  box-shadow: 0 0 6px #092e50a0;
+}
+
+.search-box i {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #092e50;
+  font-size: 1.4rem;
+  pointer-events: none;
+}
+
+/* Doctor list */
+
+/* กล่องรายชื่อแพทย์ */
+.doctor-container {
+  flex: 1; /* ดันให้ขยายเต็มที่ใน main */
+  overflow-y: auto; /* เลื่อนขึ้นลงได้ */
+  padding-right: 5px; /* กัน scrollbar ทับ */
+}
+
+/* ซ่อน scrollbar ในบาง browser */
+.doctor-container::-webkit-scrollbar {
+  width: 8px;
+}
+.doctor-container::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+.doctor-container::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+.doctor-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.doctor-item {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  background-color: rgb(78, 92, 138); /* 🔹 เปลี่ยนเป็นสีน้ำเงินเข้ม */
+  cursor: pointer;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 2px 8px rgba(4, 14, 46, 0.3);
+}
+
+.doctor-item:hover {
+  background-color: rgb(40, 53, 99); /* เข้มขึ้นเวลา hover */
+  box-shadow: 0 4px 12px rgba(4, 14, 46, 0.5);
+}
+
+.doctor-item img {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #092e50; /* คงสีทองไว้ให้ตัดกับน้ำเงิน */
+  flex-shrink: 0;
+}
+
+.doctor-name {
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 0.3rem;
+  color: #ffffff; /* สีขาว */
+}
+
+.doctor-specialty {
+  font-size: 1rem;
+  color: #dcdcdc; /* เทาอ่อน */
+  margin-bottom: 0.15rem;
+}
+
+.doctor-location {
+  font-size: 0.9rem;
+  color: #bbbbbb; /* เทาอ่อน */
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  main {
+    margin: 100px 1rem 20px;
+    padding: 1.5rem 1.5rem;
+  }
+  .doctor-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .doctor-item img {
+    margin-bottom: 0.75rem;
+  }
+}

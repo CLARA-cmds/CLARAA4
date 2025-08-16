@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liver Cancer Prediction</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="tele2.css">
+    <script>
+        const hospitalLocations = {
+            "Chiang Mai": {
+                "Mueang Chiang Mai": { name: "Chiang Mai Rama Hospital", mapUrl: "https://www.google.com/maps/embed/v1/place?q=Chiang+Mai+Rama+Hospital&key=AIzaSyCy3JUa6ZRqkGivypp5p1bu5tQZMcc1pks" },
+                "Hang Dong": { name: "Hang Dong Hospital", mapUrl: "https://www.google.com/maps/embed/v1/place?q=Hang+Dong+Hospital&key=AIzaSyCy3JUa6ZRqkGivypp5p1bu5tQZMcc1pks" }
+            },
+            "Bangkok": {
+                "Pathum Wan": { name: "Pathum Wan Hospital", mapUrl: "https://www.google.com/maps/embed/v1/place?q=Pathum+Wan+Hospital&key=AIzaSyCy3JUa6ZRqkGivypp5p1bu5tQZMcc1pks" },
+                "Bang Khen": { name: "Bang Khen Hospital", mapUrl: "https://www.google.com/maps/embed/v1/place?q=Bang+Khen+Hospital&key=AIzaSyCy3JUa6ZRqkGivypp5p1bu5tQZMcc1pks" }
+            },
+            "Phuket": {
+                "Mueang Phuket": { name: "Vachira Phuket Hospital", mapUrl: "https://www.google.com/maps/embed/v1/place?q=Vachira+Phuket+Hospital&key=AIzaSyCy3JUa6ZRqkGivypp5p1bu5tQZMcc1pks" },
+                "Thalang": { name: "Thalang Hospital", mapUrl: "https://www.google.com/maps/embed/v1/place?q=Thalang+Hospital&key=AIzaSyCy3JUa6ZRqkGivypp5p1bu5tQZMcc1pks" }
+            },
+            "Khon Kaen": {
+                "Mueang Khon Kaen": { name: "Khon Kaen Hospital", mapUrl: "https://www.google.com/maps/embed/v1/place?q=Khon+Kaen+Hospital&key=AIzaSyCy3JUa6ZRqkGivypp5p1bu5tQZMcc1pks" },
+                "Ban Phai": { name: "Ban Phai Hospital", mapUrl: "https://www.google.com/maps/embed/v1/place?q=Ban+Phai+Hospital&key=AIzaSyCy3JUa6ZRqkGivypp5p1bu5tQZMcc1pks" }
+            },
+            "Nakhon Ratchasima": {
+                "Mueang Nakhon Ratchasima": { name: "Nakhon Ratchasima Hospital", mapUrl: "https://www.google.com/maps/embed/v1/place?q=Nakhon+Ratchasima+Hospital&key=AIzaSyCy3JUa6ZRqkGivypp5p1bu5tQZMcc1pks" },
+                "Pak Chong": { name: "Pak Chong Hospital", mapUrl: "https://www.google.com/maps/embed/v1/place?q=Pak+Chong+Hospital&key=AIzaSyCy3JUa6ZRqkGivypp5p1bu5tQZMcc1pks" }
+            },
+            "Chiang Rai": {
+                "Mueang Chiang Rai": { name: "Chiang Rai Hospital", mapUrl: "https://www.google.com/maps/embed/v1/place?q=Chiang+Rai+Hospital&key=AIzaSyCy3JUa6ZRqkGivypp5p1bu5tQZMcc1pks" },
+                "Mae Sai": { name: "Mae Sai Hospital", mapUrl: "https://www.google.com/maps/embed/v1/place?q=Mae+Sai+Hospital&key=AIzaSyCy3JUa6ZRqkGivypp5p1bu5tQZMcc1pks" }
+            },
+            "Songkhla": {
+                "Mueang Songkhla": { name: "Songkhla Hospital", mapUrl: "https://www.google.com/maps/embed/v1/place?q=Songkhla+Hospital&key=AIzaSyCy3JUa6ZRqkGivypp5p1bu5tQZMcc1pks" },
+                "Hat Yai": { name: "Hat Yai Hospital", mapUrl: "https://www.google.com/maps/embed/v1/place?q=Hat+Yai+Hospital&key=AIzaSyCy3JUa6ZRqkGivypp5p1bu5tQZMcc1pks" }
+            },
+            "Surat Thani": {
+                "Mueang Surat Thani": { name: "Surat Thani Hospital", mapUrl: "https://www.google.com/maps/embed/v1/place?q=Surat+Thani+Hospital&key=AIzaSyCy3JUa6ZRqkGivypp5p1bu5tQZMcc1pks" },
+                "Phunphin": { name: "Phunphin Hospital", mapUrl: "https://www.google.com/maps/embed/v1/place?q=Phunphin+Hospital&key=AIzaSyCy3JUa6ZRqkGivypp5p1bu5tQZMcc1pks" }
+            },
+            "Udon Thani": {
+                "Mueang Udon Thani": { name: "Udon Thani Hospital", mapUrl: "https://www.google.com/maps/embed/v1/place?q=Udon+Thani+Hospital&key=AIzaSyCy3JUa6ZRqkGivypp5p1bu5tQZMcc1pks" },
+                "Kut Chap": { name: "Kut Chap Hospital", mapUrl: "https://www.google.com/maps/embed/v1/place?q=Kut+Chap+Hospital&key=AIzaSyCy3JUa6ZRqkGivypp5p1bu5tQZMcc1pks" }
+            },
+            "Nakhon Si Thammarat": {
+                "Mueang Nakhon Si Thammarat": { name: "Nakhon Si Thammarat Hospital", mapUrl: "https://www.google.com/maps/embed/v1/place?q=Nakhon+Si+Thammarat+Hospital&key=AIzaSyCy3JUa6ZRqkGivypp5p1bu5tQZMcc1pks" },
+                "Thasala": { name: "Thasala Hospital", mapUrl: "https://www.google.com/maps/embed/v1/place?q=Thasala+Hospital&key=AIzaSyCy3JUa6ZRqkGivypp5p1bu5tQZMcc1pks" }
+            }
+        };
+
+        function updateDistricts() {
+            let province = document.getElementById("provinceSelect").value;
+            let districtSelect = document.getElementById("districtSelect");
+            districtSelect.innerHTML = "<option value=''>Select</option>";
+
+            if (province && hospitalLocations[province]) {
+                Object.keys(hospitalLocations[province]).forEach(district => {
+                    let option = document.createElement("option");
+                    option.value = district;
+                    option.textContent = district;
+                    districtSelect.appendChild(option);
+                });
+            }
+        }
+
+        function updateMap() {
+            let province = document.getElementById("provinceSelect").value;
+            let district = document.getElementById("districtSelect").value;
+            let mapFrame = document.getElementById("mapFrame");
+            let hospitalName = document.getElementById("hospitalName");
+
+            if (province && district && hospitalLocations[province][district]) {
+                let hospital = hospitalLocations[province][district];
+                mapFrame.src = hospital.mapUrl;
+
+                // แปลง embed URL เป็นลิงก์ Google Maps ปกติ
+                let mapsLink = hospital.mapUrl
+                    .replace("/embed/v1/place?q=", "/search/?api=1&query=")
+                    .replace(/&key=.*/, "");
+
+                hospitalName.innerHTML = `Telemedicine : ${hospital.name} . 
+                    <a href="${mapsLink}" target="_blank" style="color: blue; text-decoration: underline;">
+                        Click here
+                    </a>`;
+            } else {
+                mapFrame.src = "";
+                hospitalName.textContent = "";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <nav class="nav">
+            <a href="http://127.0.0.1:5000/templates/home.html">
+                <div class="navlogo">
+                <p>CLARA</p>
+                </div>
+            </a>
+            <div class="nav-menu">
+                <ul> 
+                    <li><a href="home.html" class="link">Home</a></li>
+                    <li><a href="http://127.0.0.1:5050/" class="link">Screen</a></li>
+                    <li><a href="http://127.0.0.1:5000/templates/eform.html" class="link">Form</a></li>
+                    <li><a href="history.html" class="link">History</a></li>
+                    <li><a href="chat.html" class="link">ChatBot</a></li>
+                    <li><a href="tele.html" class="link active">TeleMed</a></li>
+                </ul>
+            </div>
+            <a href="http://127.0.0.1:5000/templates/!SignIn.html" class="signin-link">
+                <div class="sn">
+                    <div class="snb">
+                        <i class='bx bxs-user'></i>
+                        <h3>CLARA</h3>
+                    </div>
+                </div>
+            </a>
+            <div class="dropdown-container">
+                <button id="menuToggle" class="menu-btn"><i class='bx bx-menu'></i></button>
+                <div id="dropdownMenu" class="dropdown-menu">
+                    <a href="http://127.0.0.1:5000/templates/tele.html">TeleMed</a>
+                    <a href="http://127.0.0.1:5000/templates/spec.html">Spectro</a>
+                    <a href="http://127.0.0.1:5000/templates/info.html">Info</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Select Province and District -->
+        <div class="map-container">
+            <label for="provinceSelect" class="ib">Select Province :</label>
+            <select id="provinceSelect" onchange="updateDistricts()">
+                <option value="">Select</option>
+                <option value="Chiang Mai">Chiang Mai</option>
+                <option value="Bangkok">Bangkok</option>
+                <option value="Phuket">Phuket</option>
+                <option value="Khon Kaen">Khon Kaen</option>
+                <option value="Nakhon Ratchasima">Nakhon Ratchasima</option>
+                <option value="Chiang Rai">Chiang Rai</option>
+                <option value="Songkhla">Songkhla</option>
+                <option value="Surat Thani">Surat Thani</option>
+                <option value="Udon Thani">Udon Thani</option>
+                <option value="Nakhon Si Thammarat">Nakhon Si Thammarat</option>
+            </select>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label for="districtSelect" class="ib">Select District :</label>
+            <select id="districtSelect" onchange="updateMap()">
+                <option value="">Select</option>
+            </select>
+
+            <div id="map">
+                <iframe id="mapFrame" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div id="hospitalName" class="hospital-name"></div>
+            <a href="http://127.0.0.1:5000/templates/tele.html">
+                <div class="box">
+                    <h2>TeleMed</h2>
+                    <p>🏥</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <script>
+    const toggleBtn = document.getElementById('menuToggle');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    toggleBtn.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('show-menu');
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!toggleBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        dropdownMenu.classList.remove('show-menu');
+      }
+    });
+    </script>
+</body>
+</html>

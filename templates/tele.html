@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="home.css" />
+  <title>CLARA_WEB</title>
+</head>
+   <nav class="nav">
+    <a href="home.html">
+      <div class="navlogo">
+      <p>CLARA</p>
+      </div>
+    </a>
+    <div class="nav-menu">
+      <ul>
+        <li><a href="http://127.0.0.1:5000/templates/home.html" class="link">Home</a></li>
+        <li><a href="http://127.0.0.1:5050/" class="link">Screen</a></li>
+        <li><a href="http://127.0.0.1:5000/templates/eform.html" class="link">Form</a></li>
+        <li><a href="http://127.0.0.1:5000/templates/history.html" class="link">History</a></li>
+        <li><a href="http://127.0.0.1:5000/templates/chat.html" class="link">ChatBot</a></li>
+        <li><a href="#" class="link active">TeleMed</a></li>
+      </ul>
+    </div>
+
+    <a href="!SignIn.html">
+      <div class="sn">
+        <div class="snb">
+          <i class='bx bxs-user'></i>
+          <h3>CLARA</h3>
+        </div>
+      </div>
+    </a>
+
+    <!-- เพิ่มปุ่มเมนูด้านขวา -->
+    <div class="dropdown-container">
+      <button id="menuToggle" class="menu-btn"><i class='bx bx-menu'></i></button>
+      <div id="dropdownMenu" class="dropdown-menu">
+        <a href="http://127.0.0.1:5000/templates/tele.html">TeleMed</a>
+        <a href="http://127.0.0.1:5000/templates/spec.html">Spectro</a>
+        <a href="http://127.0.0.1:5000/templates/info.html">Info</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="main-section">
+    <div class="box-wrapper">
+      <div class="side-box">
+        <h2>Find Hospitals for Liver Cancer Screening</h2>
+        <i class='bx bxs-building-house'></i>
+        <p>Search hospitals offering liver cancer screening services nationwide.</p>
+        <a href="tele2.html" class="btn-screen">Search</a>
+      </div>
+
+      <div class="text-box">
+        <h2>Hospitals Near Me</h2>
+        <i class='bx bxs-map'></i>
+        <p>Locate hospitals close to your current location.</p>
+        <a href="https://www.google.co.th/maps/search/%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B8%9E%E0%B8%A2%E0%B8%B2%E0%B8%9A%E0%B8%B2%E0%B8%A5%E0%B9%83%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%89%E0%B8%B1%E0%B8%99/" class="btn-screen">Search</a>
+      </div>
+
+      <div class="side-box">
+        <h2>Liver Cancer Specialists</h2>
+        <i class='bx bxs-user-voice'></i>
+        <p>Find specialists and contact information for liver cancer treatment.</p>
+        <a href="tele3.html" class="btn-screen">Search</a>
+      </div>    
+    </div>
+  </section>
+
+  <script>
+    const toggleBtn = document.getElementById('menuToggle');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    toggleBtn.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('show-menu');
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!toggleBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        dropdownMenu.classList.remove('show-menu');
+      }
+    });
+  </script>
+</body>
+</html>

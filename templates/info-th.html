@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLARA</title>
+    <link rel="stylesheet" href="info.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hello {
+            padding-top: 100px;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .kpi-value {
+            font-weight: 900;
+            line-height: 1;
+        }
+        .flow-arrow::after {
+            content: '→';
+            font-size: 2rem;
+            line-height: 1;
+            color: #0d88c4;
+            margin: 0 1rem;
+        }
+        .flow-item {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+   <nav class="nav">
+    <a href="http://127.0.0.1:5000/templates/home.html">
+        <div class="navlogo">
+        <p>CLARA</p>
+        </div>
+    </a>
+    <div class="nav-menu">
+      <ul>
+        <li><a href="http://127.0.0.1:5000/templates/home.html" class="link"><h3>หน้าหลัก</h3></a></li>
+        <li><a href="http://127.0.0.1:5050/" class="link"><h3>คัดกรอง</h3></a></li>
+        <li><a href="http://127.0.0.1:5000/templates/eform.html" class="link"><h3>ฟอร์ม</h3></a></li>
+        <li><a href="http://127.0.0.1:5000/templates/history.html" class="link"><h3>ประวัติ</h3></a></li>
+        <li><a href="http://127.0.0.1:5000/templates/chat.html" class="link"><h3>แชทบอท</h3></a></li>
+        <li><a href="http://127.0.0.1:5000/templates/info.html" class="link active"><h3>ข้อมูล</h3></a></li>
+      </ul>
+    </div>
+    <div class="lang-buttons">
+        <a href="#">
+            <div class="enbx">
+                <h3>TH</h3>
+            </div>
+        </a>
+        <a href="info.html">
+            <div class="thbx">
+                <h3>EN</h3>
+            </div>
+        </a>
+    </div>
+    <a href="!SignIn.html">
+      <div class="sn">
+        <div class="snb">
+          <i class='bx bxs-user'></i>
+          <h3>CLARA</h3>
+        </div>
+      </div>
+    </a>
+    <div class="dropdown-container">
+        <button id="menuToggle" class="menu-btn"><i class='bx bx-menu'></i></button>
+        <div id="dropdownMenu" class="dropdown-menu">
+        <a href="http://127.0.0.1:5000/templates/tele.html"><h3>โรงพยาบาล</h3></a>
+        <a href="http://127.0.0.1:5000/templates/spec.html"><h3>กราฟ</h3></a>
+        <a href="http://127.0.0.1:5000/templates/info.html"><h3>ข้อมูล</h3></a>
+    </div>
+  </nav>
+  <div class="hello">
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-black text-[#0d88c4] mb-4">การวินิจฉัยลมหายใจ</h1>
+            <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">เจาะลึกข้อมูลโรคตับด้วยสารประกอบอินทรีย์ระเหยง่าย (VOCs)</p>
+        </header>
+
+        <main class="space-y-16">
+            
+            <section id="problem" class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-2xl font-bold text-[#0d88c4] mb-4">ความจำเป็นเร่งด่วนในการคัดกรองที่ดีขึ้น</h2>
+                    <p class="mb-4">มะเร็งตับ (Hepatocellular carcinoma, HCC) เป็น<span class="font-bold text-[#f59e0b]">สาเหตุอันดับที่ 4 ของการเสียชีวิตจากโรคมะเร็งทั่วโลก</span> ซึ่งมักถูกวินิจฉัยเมื่อสายเกินไป Bio-Marker แบบดั้งเดิม เช่น แอลฟา-ฟีโตโปรตีน (AFP) ขาดความไวในการตรวจหาในระยะเริ่มต้น ทำให้เกิดช่องว่างที่สำคัญในการวินิจฉัย</p>
+                    <p>การวิเคราะห์ลมหายใจนำเสนอแนวทางใหม่ โดยการตรวจจับผลพลอยได้จากการเผาผลาญที่เรียกว่า VOCs ทำให้สามารถระบุสัญญาณของโรคได้เร็วกว่าและแม่นยำกว่ามาก ซึ่งจะเปลี่ยนความสามารถของเราในการต่อสู้กับโรคตับ</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-xl font-bold text-center mb-4">VOCs มีประสิทธิภาพเหนือกว่า Bio-Marker แบบดั้งเดิม</h3>
+                    <div class="chart-container h-64 md:h-72">
+                        <canvas id="sensitivityChart"></canvas>
+                    </div>
+                        <p class="text-center text-sm text-slate-500 mt-4">แผนภูมินี้แสดงความไวที่เหนือกว่าของการวิเคราะห์ VOC ในการตรวจหา HCC เมื่อเทียบกับการตรวจเลือด AFP มาตรฐานในกลุ่มผู้ป่วยเดียวกัน</p>
+                </div>
+            </section>
+
+            <section id="science" class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-2xl font-bold text-[#0d88c4] text-center mb-6">การทำงาน: การเดินทางของ VOC</h2>
+                <p class="text-center text-slate-600 max-w-3xl mx-auto mb-8">การทำงานของตับที่ผิดปกติจากภาวะต่างๆ เช่น ภาวะตับแข็งหรือ HCC จะทำให้การเผาผลาญของร่างกายเปลี่ยนไป ซึ่งจะผลิต VOCs ที่มีลักษณะเฉพาะออกมา VOCs เหล่านี้จะเดินทางผ่านกระแสเลือด ถูกแลกเปลี่ยนในปอด และถูกขับออกมาทางลมหายใจ ทำให้ได้ข้อมูลจำเพาะเชิงเมตาบอลิซึมของโรคโดยตรงและไม่รุกล้ำร่างกาย</p>
+                    <div class="flex flex-col md:flex-row justify-around items-center space-y-4 md:space-y-0">
+                    <div class="flow-item p-4 bg-slate-50 rounded-lg flex-1">
+                        <div class="text-6xl mb-2">🔥</div>
+                        <h4 class="font-bold">การเผาผลาญตับที่ผิดปกติ</h4>
+                        <p class="text-sm text-slate-500">(ตับแข็ง/HCC)</p>
+                    </div>
+                    <div class="flow-arrow hidden md:block"></div>
+                    <div class="flow-item p-4 bg-slate-50 rounded-lg flex-1">
+                        <div class="text-6xl mb-2">💨</div>
+                        <h4 class="font-bold">การผลิต VOC</h4>
+                        <p class="text-sm text-slate-500">(ผลพลอยได้จากการเผาผลาญ)</p>
+                    </div>
+                    <div class="flow-arrow hidden md:block"></div>
+                    <div class="flow-item p-4 bg-slate-50 rounded-lg flex-1">
+                        <div class="text-6xl mb-2">🩸</div>
+                        <h4 class="font-bold">การปล่อยเข้าสู่กระแสเลือด</h4>
+                            <p class="text-sm text-slate-500">(การไหลเวียนทั่วร่างกาย)</p>
+                    </div>
+                    <div class="flow-arrow hidden md:block"></div>
+                    <div class="flow-item p-4 bg-slate-50 rounded-lg flex-1">
+                        <div class="text-6xl mb-2">🫁</div>
+                        <h4 class="font-bold">ตรวจพบในลมหายใจ</h4>
+                        <p class="text-sm text-slate-500">(การเก็บตัวอย่างแบบไม่รุกล้ำ)</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="biomarkers">
+                <h2 class="text-2xl font-bold text-[#0d88c4] text-center mb-8">ลายเซ็น Bio-Marker: VOCs สำคัญในโรคตับ</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <h3 class="font-bold text-lg text-[#0ab4d8]">อะซีโทนและอะซีตัลดีไฮด์</h3>
+                        <p class="text-sm mt-2">เพิ่มขึ้นอย่างมีนัยสำคัญทั้งใน HCC และตับแข็ง ซึ่งบ่งชี้ถึงการควบคุมการเผาผลาญที่ผิดปกติ</p>
+                    </div>
+                        <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <h3 class="font-bold text-lg text-[#0ab4d8]">ลิโมนีน</h3>
+                        <p class="text-sm mt-2">เป็น VOC จากภายนอกที่ระดับเพิ่มขึ้นเมื่อความสามารถในการล้างพิษของตับบกพร่อง ทำให้เป็นตัวบ่งชี้ปัญหาได้</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <h3 class="font-bold text-lg text-[#0ab4d8]">เฮคซีน</h3>
+                        <p class="text-sm mt-2">สัมพันธ์กับความบกพร่องในการเผาผลาญไขมัน แสดงถึงสัญญาณเริ่มต้นของความผิดปกติทางเมตาบอลิซึมในตับ</p>
+                    </div>
+                        <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <h3 class="font-bold text-lg text-[#0ab4d8]">ไอโซโพรพิลแอลกอฮอล์</h3>
+                        <p class="text-sm mt-2">มีความสัมพันธ์อย่างมากกับผู้ป่วย HCC ซึ่งสามารถใช้เป็น Bio-Marker เพื่อประเมินความรุนแรงของโรค</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="performance" class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-2xl font-bold text-[#0d88c4] mb-4">พลังของ Machine Learning</h2>
+                    <p class="mb-6">การวิเคราะห์ VOCs ที่ซับซ้อนต้องใช้อัลกอริทึมขั้นสูง การรวม Machine Learning (ML) เข้ามาช่วยทำให้แบบจำลองการวินิจฉัยมีความแม่นยำอย่างน่าทึ่ง สามารถแยกแยะระหว่างผู้ป่วยสุขภาพดี ผู้ป่วยตับแข็ง และผู้ป่วย HCC ได้อย่างน่าเชื่อถือ</p>
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div>
+                            <div class="chart-container h-32 md:h-40"><canvas id="sensitivityDonut"></canvas></div>
+                            <h4 class="font-bold mt-2">ความไว 80%</h4>
+                            <p class="text-xs text-slate-500">สามารถระบุผู้ป่วยที่เป็นโรคได้อย่างถูกต้อง</p>
+                        </div>
+                        <div>
+                                <div class="chart-container h-32 md:h-40"><canvas id="specificityDonut"></canvas></div>
+                            <h4 class="font-bold mt-2">ความจำเพาะ 90%</h4>
+                            <p class="text-xs text-slate-500">สามารถระบุผู้ป่วยที่ไม่มีโรคได้อย่างถูกต้อง</p>
+                        </div>
+                        <div>
+                            <div class="chart-container h-32 md:h-40"><canvas id="accuracyDonut"></canvas></div>
+                            <h4 class="font-bold mt-2">ความแม่นยำ 95%</h4>
+                                <p class="text-xs text-slate-500">ความถูกต้องโดยรวมของการทดสอบ</p>
+                        </div>
+                    </div>
+                </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-bold text-center mb-4">การแยก HCC ระยะเริ่มต้นจากตับแข็ง</h3>
+                    <div class="chart-container h-64 md:h-72">
+                        <canvas id="aucChart"></canvas>
+                    </div>
+                        <p class="text-center text-sm text-slate-500 mt-4">ค่า Area Under the Curve (AUC) แสดงความสามารถของแบบจำลองในการแยกแยะระหว่างกลุ่มต่างๆ Bio-Marker อะซีโทนไดเมอร์ VOC มีประสิทธิภาพเหนือกว่า AFP ในภารกิจสำคัญของการแยกมะเร็งระยะเริ่มต้นออกจากภาวะตับแข็งซึ่งเป็นสาเหตุนำ</p>
+                </div>
+            </section>
+            
+            <section id="technology">
+                    <h2 class="text-2xl font-bold text-[#0d88c4] text-center mb-8">เทคโนโลยี: จากห้องแล็บสู่คลินิก</h2>
+                    <div class="overflow-x-auto bg-white rounded-lg shadow-md p-2">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="p-4 border-b-2 border-slate-200 font-bold text-[#0d88c4]">เทคโนโลยี</th>
+                                <th class="p-4 border-b-2 border-slate-200 font-bold text-[#0d88c4]">หลักการ</th>
+                                <th class="p-4 border-b-2 border-slate-200 font-bold text-[#0d88c4]">ข้อได้เปรียบหลัก</th>
+                                <th class="p-4 border-b-2 border-slate-200 font-bold text-[#0d88c4]">ความท้าทายหลัก</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-4 border-b border-slate-200 font-bold">GC-MS</td>
+                                <td class="p-4 border-b border-slate-200">แยกและระบุ VOCs แต่ละชนิด "มาตรฐานทองคำ" สำหรับความแม่นยำ</td>
+                                <td class="p-4 border-b border-slate-200">ความน่าเชื่อถือสูงและระบุโครงสร้างโมเลกุลได้อย่างละเอียด</td>
+                                <td class="p-4 border-b border-slate-200">ใช้เวลานาน ต้องอาศัยผู้เชี่ยวชาญในการวิเคราะห์ และขาดการกำหนดมาตรฐาน</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-4 border-b border-slate-200 font-bold">PTR-MS</td>
+                                <td class="p-4 border-b border-slate-200">การสร้างไอออนและการวิเคราะห์มวลของลมหายใจแบบเรียลไทม์</td>
+                                <td class="p-4 border-b border-slate-200">ให้ผลลัพธ์ทันที มีความไวสูง และเหมาะสำหรับการคัดกรองอย่างรวดเร็ว</td>
+                                <td class="p-4 border-b border-slate-200">ให้ข้อมูลโครงสร้างละเอียดน้อยกว่า GC-MS</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-4 border-b border-slate-200 font-bold">E-Nose</td>
+                                <td class="p-4 border-b border-slate-200">เลียนแบบการรับกลิ่นเพื่อระบุรูปแบบของ VOCs ไม่ใช่สารประกอบแต่ละชนิด</td>
+                                <td class="p-4 border-b border-slate-200">ต้นทุนต่ำ พกพาได้ และเหมาะสำหรับการคัดกรอง ณ จุดดูแล</td>
+                                <td class="p-4 border-b border-slate-200">ต้องใช้แบบจำลอง ML ที่แข็งแกร่งและฝึกฝนด้วยชุดข้อมูลขนาดใหญ่ที่ได้มาตรฐาน</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+            </section>
+
+                <section id="advantages">
+                <h2 class="text-2xl font-bold text-[#0d88c4] text-center mb-8">ก้าวไปข้างหน้า: ข้อได้เปรียบหลัก</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <span class="text-6xl">🕊️</span>
+                        <h3 class="font-bold text-lg mt-4 mb-2">ไม่รุกล้ำและปลอดภัย</h3>
+                        <p class="text-sm text-slate-600">การเก็บตัวอย่างลมหายใจเป็นวิธีที่ไม่ต้องใช้เข็มหรือการตัดชิ้นเนื้อ ช่วยเพิ่มความสะดวกสบายและลดความวิตกกังวลของผู้ป่วย
+</p>
+                    </div>
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                        <span class="text-6xl">⏱️</span>
+                        <h3 class="font-bold text-lg mt-4 mb-2">ผลลัพธ์แบบเรียลไทม์</h3>
+                        <p class="text-sm text-slate-600">ลมหายใจสะท้อนสถานะการเผาผลาญของร่างกายในปัจจุบัน ทำให้ได้ภาพรวมแบบไดนามิกของกิจกรรมของโรค</p>
+                    </div>
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                        <span class="text-6xl">💡</span>
+                        <h3 class="font-bold text-lg mt-4 mb-2">การตรวจหาตั้งแต่เนิ่นๆ</h3>
+                        <p class="text-sm text-slate-600">การเปลี่ยนแปลงทางเมตาบอลิซึมมักเกิดขึ้นก่อนอาการทางกายภาพ ทำให้สามารถรักษาได้เร็วขึ้นและได้ผลลัพธ์ที่ดีขึ้น</p>
+                    </div>
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                        <span class="text-6xl">💰</span>
+                        <h3 class="font-bold text-lg mt-4 mb-2">คุ้มค่าและเข้าถึงได้ง่าย</h3>
+                        <p class="text-sm text-slate-600">อุปกรณ์แบบพกพาและศักยภาพในการประมวลผลสูงสามารถลดค่าใช้จ่ายด้านการดูแลสุขภาพและทำให้การคัดกรองเป็นไปอย่างทั่วถึง</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+        
+        <footer class="text-center mt-16 border-t pt-8 border-slate-300">
+                <p class="text-slate-600">การวิเคราะห์ลมหายใจด้วย VOCs แสดงถึงการเปลี่ยนแปลงกระบวนทัศน์ในการวินิจฉัยทางการแพทย์</p>
+                <p class="text-sm text-slate-500 mt-2">ข้อมูลนี้สังเคราะห์จากงานวิจัยร่วมสมัยเกี่ยวกับ Breathomics สำหรับการวินิจฉัยโรคตับ</p>
+        </footer>
+
+    </div>
+  </div>
+    <script>
+        const brilliantBlues = {
+            primary: '#0d88c4',
+            secondary: '#0ab4d8',
+            tertiary: '#63d1e4',
+            highlight: '#f59e0b',
+            background: '#f1f5f9',
+            text: '#1e293b',
+            lightGray: '#cbd5e1'
+        };
+
+        const chartTooltipOptions = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                                return label.join(' ');
+                            } else {
+                                return label;
+                            }
+                        }
+                    }
+                },
+                legend: {
+                    display: false
+                }
+            }
+        };
+
+        function wrapLabel(str, maxWidth) {
+            if (str.length <= maxWidth) return str;
+            const words = str.split(' ');
+            const lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + word).length > maxWidth) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            });
+            lines.push(currentLine.trim());
+            return lines.filter(line => line.length > 0);
+        }
+
+        const sensitivityData = {
+            labels: ['การวิเคราะห์ VOCs', 'Bio-Marker AFP'],
+            datasets: [{
+                label: 'ความไวในการตรวจหา HCC',
+                data: [73, 53],
+                backgroundColor: [brilliantBlues.primary, brilliantBlues.lightGray],
+                borderColor: [brilliantBlues.primary, brilliantBlues.lightGray],
+                borderWidth: 1
+            }]
+        };
+        new Chart(document.getElementById('sensitivityChart'), {
+            type: 'bar',
+            data: sensitivityData,
+            options: { ...chartTooltipOptions,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: { display: true, text: 'ความไว (%)' }
+                    }
+                }
+            }
+        });
+
+        const aucData = {
+            labels: [wrapLabel('อะซีโทนไดเมอร์ (VOC)', 16), 'Bio-Marker AFP'],
+            datasets: [{
+                label: 'คะแนน AUC',
+                data: [0.775, 0.714],
+                backgroundColor: [brilliantBlues.secondary, brilliantBlues.lightGray],
+                borderColor: [brilliantBlues.secondary, brilliantBlues.lightGray],
+                borderWidth: 1
+            }]
+        };
+        new Chart(document.getElementById('aucChart'), {
+            type: 'bar',
+            data: aucData,
+            options: { ...chartTooltipOptions,
+                    maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 0.7,
+                        max: 0.8,
+                        title: { display: true, text: 'ค่า Area Under Curve (AUC)' }
+                    }
+                }
+            }
+        });
+        
+        function createDonut(canvasId, dataValue, color) {
+            new Chart(document.getElementById(canvasId), {
+                type: 'doughnut',
+                data: {
+                    labels: ['สำเร็จ', 'คงเหลือ'],
+                    datasets: [{
+                        data: [dataValue, 100 - dataValue],
+                        backgroundColor: [color, brilliantBlues.lightGray],
+                        borderColor: [brilliantBlues.background, brilliantBlues.background],
+                        borderWidth: 2,
+                        cutout: '70%'
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                        plugins: {
+                        tooltip: { enabled: false },
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        createDonut('sensitivityDonut', 80, brilliantBlues.primary);
+        createDonut('specificityDonut', 90, brilliantBlues.secondary);
+        createDonut('accuracyDonut', 95, brilliantBlues.tertiary);
+
+    </script>
+    <script>
+    const toggleBtn = document.getElementById('menuToggle');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    toggleBtn.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('show-menu');
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!toggleBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        dropdownMenu.classList.remove('show-menu');
+      }
+    });
+  </script>
+    <script>
+        // ส่วนที่ 1: บันทึกตำแหน่งการเลื่อนเมื่อมีการกดปุ่มเปลี่ยนภาษา
+        // เราจะใช้ LocalStorage เพื่อเก็บข้อมูลตำแหน่งไว้ชั่วคราวในเบราว์เซอร์
+        document.addEventListener('DOMContentLoaded', () => {
+            const langButtons = document.querySelector('.lang-buttons');
+            if (langButtons) {
+                langButtons.addEventListener('click', () => {
+                    localStorage.setItem('scrollPosition', window.scrollY);
+                });
+            }
+        });
+
+        // ส่วนที่ 2: เลื่อนหน้าจอไปตำแหน่งที่บันทึกไว้เมื่อหน้าเว็บโหลดเสร็จ
+        window.onload = function() {
+            const scrollPosition = localStorage.getItem('scrollPosition');
+            if (scrollPosition) {
+                // ใช้ setTimeout เพื่อให้แน่ใจว่าหน้าเว็บแสดงผลเสร็จก่อนทำการเลื่อน
+                setTimeout(() => {
+                    // เปลี่ยนจาก scrollTo แบบปกติ เป็นแบบมี behavior: 'smooth'
+                    window.scrollTo({
+                        top: parseInt(scrollPosition),
+                        behavior: 'smooth'
+                    });
+                    // ลบข้อมูลตำแหน่งออก เพื่อไม่ให้มีผลกับการเข้าชมหน้าครั้งต่อไป
+                    localStorage.removeItem('scrollPosition');
+                }, 100); 
+            }
+        };
+    </script>
+</body>
+</html>

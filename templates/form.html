@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="form.css" />
+  <title>CLARA_WEB</title>
+  <script src="../static/script.js"></script>
+</head>
+<body>
+   <nav class="nav">
+    <a href="home.html">
+      <div class="navlogo">
+      <p>CLARA</p>
+      </div>
+    </a>
+    <div class="nav-menu">
+      <ul>
+        <li><a href="http://127.0.0.1:5000/templates/home.html" class="link">Home</a></li>
+        <li><a href="http://127.0.0.1:5050/" class="link">Screen</a></li>
+        <li><a href="http://127.0.0.1:5000/templates/eform.html" class="link active">Form</a></li>
+        <li><a href="http://127.0.0.1:5000/templates/history.html" class="link">History</a></li>
+        <li><a href="http://127.0.0.1:5000/templates/chat.html" class="link">ChatBot</a></li>
+      </ul>
+    </div>
+    <a href="!SignIn.html">
+      <div class="sn">
+        <div class="snb">
+          <i class='bx bxs-user'></i>
+          <h3>CLARA</h3>
+        </div>
+      </div>
+    </a>
+    <div class="dropdown-container">
+      <button id="menuToggle" class="menu-btn"><i class='bx bx-menu'></i></button>
+      <div id="dropdownMenu" class="dropdown-menu">
+        <a href="http://127.0.0.1:5000/templates/tele.html">TeleMed</a>
+        <a href="http://127.0.0.1:5000/templates/spec.html">Spectro</a>
+        <a href="http://127.0.0.1:5000/templates/info.html">Info</a>
+      </div>
+    </div>
+   </nav>
+
+   <section class="form-section">
+    <div class="form-box">
+      <h2>แบบประเมินความเสี่ยงโรคมะเร็งตับ</h2>
+      <form id="riskForm" class="risk-form">
+        <label>อายุ:</label>
+        <input type="number" name="age" required>
+
+        <label>เพศ:</label>
+        <select name="gender" required>
+          <option value="">-- กรุณาเลือก --</option>
+          <option value="male">ชาย</option>
+          <option value="female">หญิง</option>
+        </select>
+
+        <label>ท่านเคยเป็นไวรัสตับอักเสบ B หรือ C หรือไม่?</label>
+        <select name="hepatitis" required>
+          <option value="">-- กรุณาเลือก --</option>
+          <option value="no">ไม่เคย</option>
+          <option value="b">ไวรัสตับอักเสบ B</option>
+          <option value="c">ไวรัสตับอักเสบ C</option>
+        </select>
+
+        <label>ดื่มแอลกอฮอล์เป็นประจำหรือไม่?</label>
+        <select name="alcohol" required>
+          <option value="">-- กรุณาเลือก --</option>
+          <option value="no">ไม่ดื่ม</option>
+          <option value="yes">ดื่มเป็นประจำ</option>
+        </select>
+
+        <label>สูบบุหรี่หรือไม่?</label>
+        <select name="smoking" required>
+          <option value="">-- กรุณาเลือก --</option>
+          <option value="no">ไม่สูบ</option>
+          <option value="yes">สูบ</option>
+        </select>
+
+        <label>คนในครอบครัวเคยเป็นมะเร็งตับหรือไม่?</label>
+        <select name="family_history" required>
+          <option value="">-- กรุณาเลือก --</option>
+          <option value="no">ไม่มี</option>
+          <option value="yes">มี</option>
+        </select>
+
+        <label>ท่านเคยได้รับการวินิจฉัยว่าเป็นโรคตับเรื้อรังหรือไขมันพอกตับหรือไม่?</label>
+        <select name="fatty_liver" required>
+          <option value="">-- กรุณาเลือก --</option>
+          <option value="no">ไม่เคย</option>
+          <option value="yes">เคย</option>
+        </select>
+
+        <button type="submit" class="btn-screen">ประเมินความเสี่ยง</button>
+      </form>
+
+      <div id="result" class="result-box" style="display: none;"></div>
+    </div>
+    <script>
+      document.getElementById("riskForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        let score = 0;
+        const form = e.target;
+        const age = parseInt(form.age.value);
+        const hepatitis = form.hepatitis.value;
+        const alcohol = form.alcohol.value;
+        const smoking = form.smoking.value;
+        const family = form.family_history.value;
+        const fatty = form.fatty_liver.value;
+
+        if (age >= 60) score += 2;
+        else if (age >= 40) score += 1;
+
+        if (hepatitis === "b" || hepatitis === "c") score += 2;
+        if (alcohol === "yes") score += 1;
+        if (smoking === "yes") score += 1;
+        if (family === "yes") score += 1;
+        if (fatty === "yes") score += 1;
+
+        const resultBox = document.getElementById("result");
+
+        // ลบคลาสเดิมก่อน
+        resultBox.classList.remove("low", "medium", "high");
+
+        let resultText = "";
+        if (score >= 5) {
+          resultText = `ระดับความเสี่ยง: <strong style="color:red;">สูง</strong><br>ควรพบแพทย์เพื่อตรวจเพิ่มเติม`;
+          resultBox.classList.add("high");
+        } else if (score >= 3) {
+          resultText = `ระดับความเสี่ยง: <strong style="color:orange;">ปานกลาง</strong><br>ควรหมั่นตรวจสุขภาพเป็นประจำ`;
+          resultBox.classList.add("medium");
+        } else {
+          resultText = `ระดับความเสี่ยง: <strong style="color:green;">ต่ำ</strong><br>ควรรักษาสุขภาพให้ดีอย่างสม่ำเสมอ`;
+          resultBox.classList.add("low");
+        }
+
+        resultBox.innerHTML = resultText;
+        resultBox.style.display = "block";
+      });
+    </script>
+  </section>
+  <script>
+    const toggleBtn = document.getElementById('menuToggle');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    toggleBtn.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('show-menu');
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!toggleBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        dropdownMenu.classList.remove('show-menu');
+      }
+    });
+  </script>
+</body>
+</html>

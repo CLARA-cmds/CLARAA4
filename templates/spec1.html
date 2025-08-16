@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="spec.css" />
+  <title>CLARA_WEB</title>
+</head>
+<body>
+    <nav class="nav">
+      <a href="home.html">
+        <div class="navlogo">
+        <p>CLARA</p>
+        </div>
+      </a>
+     <div class="nav-menu">
+       <ul>
+         <li><a href="http://127.0.0.1:5000/templates/home.html" class="link">Home</a></li>
+         <li><a href="http://127.0.0.1:5050/" class="link">Screen</a></li>
+         <li><a href="http://127.0.0.1:5000/templates/eform.html" class="link">Form</a></li>
+         <li><a href="http://127.0.0.1:5000/templates/history.html" class="link">History</a></li>
+         <li><a href="http://127.0.0.1:5000/templates/chat.html" class="link">ChatBot</a></li>
+         <li><a href="#" class="link active">Spectro</a></li>
+       </ul>
+     </div>
+
+     <a href="!SignIn.html">
+       <div class="sn">
+         <div class="snb">
+           <i class='bx bxs-user'></i>
+           <h3>CLARA</h3>
+         </div>
+       </div>
+     </a>
+      <div class="dropdown-container">
+        <button id="menuToggle" class="menu-btn"><i class='bx bx-menu'></i></button>
+        <div id="dropdownMenu" class="dropdown-menu">
+          <a href="http://127.0.0.1:5000/templates/tele.html">TeleMed</a>
+          <a href="http://127.0.0.1:5000/templates/spec.html">Spectro</a>
+          <a href="http://127.0.0.1:5000/templates/info.html">Info</a>
+        </div>
+      </div>
+    </nav>
+   <h1>Real-time Spectrometer Viewer</h1>
+
+   <div id="videoControlWrapper">
+     <div id="videoContainer">
+       <video id="video" autoplay muted playsinline></video>
+       <canvas id="overlay"></canvas>
+     </div>
+
+     <div id="controls">
+         <button id="toggleCamBtn">Start Camera</button>
+         <button id="applyBtn">Apply</button>
+         <button id="exportCsvBtn">Export White CSV</button>
+         <button id="toggleModeBtn">Show Absorption</button>
+         <button id="autoSetBtn">AutoSet</button>
+         <button id="resetBtn">Reset</button>
+       <div style="margin-top: 20px;">
+         <label>Min X: <input id="minXInput" type="number" value="0" /></label>
+         <label>Max X: <input id="maxXInput" type="number" value="1279" /></label>
+         <label>Max Y: <input id="maxYInput" type="number" value="400" /></label>
+         <label>Scan Y: <input id="scanYInput" type="number" value="50" /></label>
+       </div>
+     </div>
+   </div>
+
+   <canvas id="canvas" width="640" height="1" style="display:none;"></canvas>
+
+   <div id="chart">
+     <canvas id="spectrumChart"></canvas>
+   </div>
+
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <script>
+     const video = document.getElementById("video");
+     const overlay = document.getElementById("overlay");
+     const overlayCtx = overlay.getContext("2d");
+     const canvas = document.getElementById("canvas");
+     const ctx = canvas.getContext("2d");
+     const toggleCamBtn = document.getElementById("toggleCamBtn");
+
+     const scanYInput = document.getElementById("scanYInput");
+     const minXInput = document.getElementById("minXInput");
+     const maxXInput = document.getElementById("maxXInput");
+     const maxYInput = document.getElementById("maxYInput");
+     const applyBtn = document.getElementById("applyBtn");
+     const autoSetBtn = document.getElementById("autoSetBtn");
+     const resetBtn = document.getElementById("resetBtn");
+     const toggleModeBtn = document.getElementById("toggleModeBtn");
+
+     let stream = null;
+     let running = false;
+     let isAbsorptionMode = false;
+
+     let scanLineY = 50;
+     let minX = 0;
+     let maxX = 1279;
+     let maxY = 400;
+
+     const MAX_INTENSITY_REFERENCE = 1000;
+
+     const drawScanLine = () => {
+       overlayCtx.clearRect(0, 0, overlay.width, overlay.height);
+       overlayCtx.strokeStyle = "yellow";
+       overlayCtx.lineWidth = 2;
+       overlayCtx.beginPath();
+       overlayCtx.moveTo(0, scanLineY);
+       overlayCtx.lineTo(overlay.width, scanLineY);
+       overlayCtx.stroke();
+     };
+
+     const spectrumChart = new Chart(document.getElementById("spectrumChart"), {
+       type: "line",
+       data: {
+         labels: [],
+         datasets: [
+           { label: "Red", data: [], borderColor: "red", fill: false, hidden: false },
+           { label: "Green", data: [], borderColor: "green", fill: false, hidden: false },
+           { label: "Blue", data: [], borderColor: "blue", fill: false, hidden: false },
+           { label: "White (R+G+B)", data: [], borderColor: "white", fill: false, hidden: false },
+           { label: "Absorption (Scaled 0-255)", data: [], borderColor: "orange", fill: false, hidden: true }
+         ]
+       },
+       options: {
+         responsive: true,
+         animation: false,
+         scales: {
+           x: {
+             title: { display: true, text: "Pixel Offset (0–1279)", color: "white" },
+             ticks: { color: "white" },
+             grid: { color: "#444" }
+           },
+           y: {
+             title: { display: true, text: "Intensity", color: "white" },
+             ticks: {
+               color: "white",
+               stepSize: Math.ceil(maxY / 20),
+               callback: val => Math.round(val)
+             },
+             min: 0,
+             max: maxY,
+             grid: { color: "#444" }
+           }
+         },
+         plugins: {
+           legend: {
+             labels: { color: "white" }
+           },
+           tooltip: {
+             mode: 'index',
+             intersect: false,
+             position: 'nearest'
+           }
+         },
+         interaction: {
+           mode: 'index',
+           intersect: false
+         }
+       }
+     });
+
+     function setIntensityScale() {
+       const step = Math.ceil(maxY / 20);
+       spectrumChart.options.scales.y.title.text = "Intensity";
+       spectrumChart.options.scales.y.min = 0;
+       spectrumChart.options.scales.y.max = maxY;
+       spectrumChart.options.scales.y.ticks.stepSize = step;
+       spectrumChart.options.scales.y.ticks.callback = val => Math.round(val);
+       spectrumChart.update();
+     }
+
+     function setAbsorptionScale() {
+       spectrumChart.options.scales.y.title.text = "Absorption (Scaled 0-255)";
+       spectrumChart.options.scales.y.min = 0;
+       spectrumChart.options.scales.y.max = 255;
+       spectrumChart.options.scales.y.ticks.stepSize = Math.ceil(255 / 20);
+       spectrumChart.options.scales.y.ticks.callback = val => Math.round(val);
+       spectrumChart.update();
+     }
+
+     async function startCamera() {
+       try {
+         stream = await navigator.mediaDevices.getUserMedia({
+           video: { width: 640, height: 480 }
+         });
+         video.srcObject = stream;
+         running = true;
+         drawScanLine();
+         captureLoop();
+       } catch (err) {
+         console.error("Error accessing camera: ", err);
+         alert("Could not start camera.");
+       }
+     }
+
+     function stopCamera() {
+       if (stream) {
+         stream.getTracks().forEach((track) => track.stop());
+         running = false;
+         overlayCtx.clearRect(0, 0, overlay.width, overlay.height);
+         isAbsorptionMode = false;
+         toggleModeBtn.textContent = "Show Absorption";
+         spectrumChart.data.datasets.forEach(dataset => dataset.hidden = false);
+         spectrumChart.data.datasets[4].hidden = true;
+         setIntensityScale();
+       }
+     }
+
+     function captureLoop() {
+       if (!running) return;
+
+       ctx.drawImage(video, 0, scanLineY, canvas.width, 1, 0, 0, canvas.width, 1);
+       const frame = ctx.getImageData(0, 0, canvas.width, 1).data;
+
+       const red = [], green = [], blue = [], white = [], labels = [], absorptionData = [];
+
+       for (let x = 0; x < 640; x++) {
+         const i = x * 4;
+         const r = frame[i];
+         const g = frame[i + 1];
+         const b = frame[i + 2];
+         const w = r + g + b;
+
+         const px1 = x * 2;
+         const px2 = px1 + 1;
+
+         if (px1 >= minX && px1 <= maxX) {
+           red.push(r); green.push(g); blue.push(b); white.push(w); labels.push(px1);
+           absorptionData.push((1 - w / MAX_INTENSITY_REFERENCE) * 255);
+         }
+         if (px2 >= minX && px2 <= maxX) {
+           red.push(r); green.push(g); blue.push(b); white.push(w); labels.push(px2);
+           absorptionData.push((1 - w / MAX_INTENSITY_REFERENCE) * 255);
+         }
+       }
+
+       spectrumChart.data.labels = labels;
+       spectrumChart.data.datasets[0].data = red;
+       spectrumChart.data.datasets[1].data = green;
+       spectrumChart.data.datasets[2].data = blue;
+       spectrumChart.data.datasets[3].data = white;
+       spectrumChart.data.datasets[4].data = absorptionData;
+       spectrumChart.update();
+
+       requestAnimationFrame(captureLoop);
+     }
+
+     toggleCamBtn.addEventListener("click", () => {
+       if (!running) {
+         startCamera();
+         toggleCamBtn.textContent = "Stop Camera";
+       } else {
+         stopCamera();
+         toggleCamBtn.textContent = "Start Camera";
+       }
+     });
+
+     overlay.addEventListener("click", (e) => {
+       const rect = overlay.getBoundingClientRect();
+       const y = e.clientY - rect.top;
+       scanLineY = Math.max(0, Math.min(video.videoHeight - 1, Math.round(y)));
+       scanYInput.value = scanLineY;
+       drawScanLine();
+     });
+
+     applyBtn.addEventListener("click", () => {
+       scanLineY = parseInt(scanYInput.value) || 0;
+       minX = parseInt(minXInput.value) || 0;
+       maxX = parseInt(maxXInput.value) || 1279;
+       maxY = parseInt(maxYInput.value) || 400;
+       drawScanLine();
+       if (!isAbsorptionMode) setIntensityScale();
+     });
+
+     video.addEventListener("loadedmetadata", () => {
+       overlay.width = video.videoWidth;
+       overlay.height = video.videoHeight;
+       drawScanLine();
+     });
+
+     autoSetBtn.addEventListener("click", () => {
+       if (!running) return;
+       let maxSum = -1;
+       let bestY = 0;
+       const tempCanvas = document.createElement('canvas');
+       tempCanvas.width = 640;
+       tempCanvas.height = video.videoHeight;
+       const tempCtx = tempCanvas.getContext("2d");
+       tempCtx.drawImage(video, 0, 0);
+       const fullFrame = tempCtx.getImageData(0, 0, 640, video.videoHeight).data;
+
+       for (let y = 0; y < video.videoHeight; y++) {
+         let sum = 0;
+         for (let x = 0; x < 640; x++) {
+           const i = (y * 640 + x) * 4;
+           sum += fullFrame[i] + fullFrame[i + 1] + fullFrame[i + 2];
+         }
+         if (sum > maxSum) {
+           maxSum = sum;
+           bestY = y;
+         }
+       }
+
+       scanLineY = bestY;
+       scanYInput.value = bestY;
+       drawScanLine();
+     });
+
+     resetBtn.addEventListener("click", () => {
+       scanLineY = 50;
+       minX = 0;
+       maxX = 1279;
+       maxY = 400;
+       scanYInput.value = scanLineY;
+       minXInput.value = minX;
+       maxXInput.value = maxX;
+       maxYInput.value = maxY;
+       drawScanLine();
+       if (!isAbsorptionMode) setIntensityScale();
+     });
+     document.getElementById("exportCsvBtn").addEventListener("click", () => {
+        const labels = spectrumChart.data.labels;
+        const whiteData = spectrumChart.data.datasets[3].data;
+
+        if (!labels.length || !whiteData.length) {
+        alert("No data to export!");
+        return;
+        }
+
+        let csvContent = "Pixel,White\n";
+        labels.forEach((label, index) => {
+        csvContent += `${label},${whiteData[index]}\n`;
+        });
+
+        const blob = new Blob([csvContent], { type: "text/csv" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "spectrum_white.csv";
+        a.click();
+        URL.revokeObjectURL(url);
+        });
+
+     toggleModeBtn.addEventListener("click", () => {
+       if (!running) return;
+       isAbsorptionMode = !isAbsorptionMode;
+       toggleModeBtn.textContent = isAbsorptionMode ? "Show Intensity" : "Show Absorption";
+       spectrumChart.data.datasets[0].hidden = isAbsorptionMode;
+       spectrumChart.data.datasets[1].hidden = isAbsorptionMode;
+       spectrumChart.data.datasets[2].hidden = isAbsorptionMode;
+       spectrumChart.data.datasets[3].hidden = isAbsorptionMode;
+       spectrumChart.data.datasets[4].hidden = !isAbsorptionMode;
+       isAbsorptionMode ? setAbsorptionScale() : setIntensityScale();
+       spectrumChart.update();
+     });
+   </script>
+   <script>
+    const toggleBtn = document.getElementById('menuToggle');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    toggleBtn.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('show-menu');
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!toggleBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        dropdownMenu.classList.remove('show-menu');
+      }
+    });
+  </script>
+</body>
+</html>
