@@ -94,36 +94,36 @@
 <body>
     <div class="wrapper">
         <nav class="nav">
-            <a href="http://127.0.0.1:5000/templates/home.html">
+            <a href="/home">
                 <div class="navlogo">
                 <p>CLARA</p>
                 </div>
             </a>
             <div class="nav-menu">
-                <ul> 
-                    <li><a href="home.html" class="link">Home</a></li>
-                    <li><a href="http://127.0.0.1:5050/" class="link">Screen</a></li>
-                    <li><a href="http://127.0.0.1:5000/templates/eform.html" class="link">Form</a></li>
-                    <li><a href="history.html" class="link">History</a></li>
-                    <li><a href="chat.html" class="link">ChatBot</a></li>
-                    <li><a href="tele.html" class="link active">TeleMed</a></li>
-                </ul>
+            <ul>
+                <li><a href="/home" class="link">Home</a></li>
+                <li><a href="/" class="link">Screen</a></li>
+                <li><a href="/eform" class="link">Form</a></li>
+                <li><a href="/history" class="link">History</a></li>
+                <li><a href="#" class="link active">ChatBot</a></li>
+            </ul>
             </div>
-            <a href="http://127.0.0.1:5000/templates/!SignIn.html" class="signin-link">
-                <div class="sn">
-                    <div class="snb">
-                        <i class='bx bxs-user'></i>
-                        <h3>CLARA</h3>
-                    </div>
+            <a href="!SignIn.html">
+            <div class="sn">
+                <div class="snb">
+                <i class='bx bxs-user'></i>
+                <h3>CLARA</h3>
                 </div>
+            </div>
             </a>
+            <!-- เพิ่มปุ่มเมนูด้านขวา -->
             <div class="dropdown-container">
-                <button id="menuToggle" class="menu-btn"><i class='bx bx-menu'></i></button>
-                <div id="dropdownMenu" class="dropdown-menu">
-                    <a href="http://127.0.0.1:5000/templates/tele.html">TeleMed</a>
-                    <a href="http://127.0.0.1:5000/templates/spec.html">Spectro</a>
-                    <a href="http://127.0.0.1:5000/templates/info.html">Info</a>
-                </div>
+            <button id="menuToggle" class="menu-btn"><i class='bx bx-menu'></i></button>
+            <div id="dropdownMenu" class="dropdown-menu">
+                <a href="/tele">TeleMed</a>
+                <a href="/spec">Spectro</a>
+                <a href="/info">Info</a>
+            </div>
             </div>
         </nav>
 
@@ -153,7 +153,7 @@
                 <iframe id="mapFrame" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
             <div id="hospitalName" class="hospital-name"></div>
-            <a href="http://127.0.0.1:5000/templates/tele.html">
+            <a href="/tele">
                 <div class="box">
                     <h2>TeleMed</h2>
                     <p>🏥</p>

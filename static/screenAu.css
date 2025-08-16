@@ -12,6 +12,12 @@ body {
   overflow: hidden;
 }
 
+.datab h3 {
+  color: #FFB000;
+  top: 220px;
+  position: absolute;
+}
+
 .datab h2 {
     margin-top: 20px;
     padding: -20px;
@@ -108,7 +114,7 @@ body {
 }
 
 .datab {
-    width: 600px;
+    width: 800px;
     height: 475px;
     background-color: #ffffff;
     position: absolute;

@@ -9,19 +9,19 @@
   <script src="../static/script.js"></script>
 </head>
 <body>
-   <nav class="nav">
-    <a href="home.html">
-      <div class="navlogo">
-      <p>CLARA</p>
-      </div>
+  <nav class="nav">
+    <a href="/home">
+        <div class="navlogo">
+        <p>CLARA</p>
+        </div>
     </a>
     <div class="nav-menu">
       <ul>
-        <li><a href="http://127.0.0.1:5000/templates/home.html" class="link">Home</a></li>
-        <li><a href="http://127.0.0.1:5050/" class="link">Screen</a></li>
-        <li><a href="http://127.0.0.1:5000/templates/eform.html" class="link active">Form</a></li>
-        <li><a href="http://127.0.0.1:5000/templates/history.html" class="link">History</a></li>
-        <li><a href="http://127.0.0.1:5000/templates/chat.html" class="link">ChatBot</a></li>
+        <li><a href="/home" class="link">Home</a></li>
+        <li><a href="/" class="link">Screen</a></li>
+        <li><a href="/eform" class="link">Form</a></li>
+        <li><a href="/history" class="link">History</a></li>
+        <li><a href="#" class="link active">ChatBot</a></li>
       </ul>
     </div>
     <a href="!SignIn.html">
@@ -32,15 +32,16 @@
         </div>
       </div>
     </a>
+    <!-- เพิ่มปุ่มเมนูด้านขวา -->
     <div class="dropdown-container">
       <button id="menuToggle" class="menu-btn"><i class='bx bx-menu'></i></button>
       <div id="dropdownMenu" class="dropdown-menu">
-        <a href="http://127.0.0.1:5000/templates/tele.html">TeleMed</a>
-        <a href="http://127.0.0.1:5000/templates/spec.html">Spectro</a>
-        <a href="http://127.0.0.1:5000/templates/info.html">Info</a>
+        <a href="/tele">TeleMed</a>
+        <a href="/spec">Spectro</a>
+        <a href="/info">Info</a>
       </div>
     </div>
-   </nav>
+  </nav>
 
    <section class="main-section">
     <div class="box-wrapper">
@@ -48,7 +49,7 @@
         <h1>Start Your Risk Assessment</h1>
         <i class='bx bxs-objects-vertical-bottom'></i>
         <p>Fill out the form to assess your risk of liver cancer using our AI-powered tool.</p>
-        <a href="http://127.0.0.1:5000/templates/form.html" class="btn-screen">Start Now</a>
+        <a href="/form" class="btn-screen">Start Now</a>
       </div> 
     </div>
   </section>

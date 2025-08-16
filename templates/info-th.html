@@ -49,50 +49,53 @@
     </style>
 </head>
 <body>
-   <nav class="nav">
-    <a href="http://127.0.0.1:5000/templates/home.html">
-        <div class="navlogo">
-        <p>CLARA</p>
-        </div>
-    </a>
-    <div class="nav-menu">
-      <ul>
-        <li><a href="http://127.0.0.1:5000/templates/home.html" class="link"><h3>หน้าหลัก</h3></a></li>
-        <li><a href="http://127.0.0.1:5050/" class="link"><h3>คัดกรอง</h3></a></li>
-        <li><a href="http://127.0.0.1:5000/templates/eform.html" class="link"><h3>ฟอร์ม</h3></a></li>
-        <li><a href="http://127.0.0.1:5000/templates/history.html" class="link"><h3>ประวัติ</h3></a></li>
-        <li><a href="http://127.0.0.1:5000/templates/chat.html" class="link"><h3>แชทบอท</h3></a></li>
-        <li><a href="http://127.0.0.1:5000/templates/info.html" class="link active"><h3>ข้อมูล</h3></a></li>
-      </ul>
-    </div>
-    <div class="lang-buttons">
-        <a href="#">
-            <div class="enbx">
-                <h3>TH</h3>
+    <nav class="nav">
+        <a href="/home">
+            <div class="navlogo">
+            <p>CLARA</p>
             </div>
         </a>
-        <a href="info.html">
-            <div class="thbx">
-                <h3>EN</h3>
+        <div class="nav-menu">
+            <ul>
+            <li><a href="/home" class="link">Home</a></li>
+            <li><a href="/" class="link">Screen</a></li>
+            <li><a href="/eform" class="link">Form</a></li>
+            <li><a href="/history" class="link">History</a></li>
+            <li><a href="#" class="link active">ChatBot</a></li>
+            </ul>
+        </div>
+
+        <div class="lang-buttons">
+            <a href="#">
+                <div class="enbx">
+                    <h3>TH</h3>
+                </div>
+            </a>
+            <a href="info/">
+                <div class="thbx">
+                    <h3>EN</h3>
+                </div>
+            </a>
+        </div>
+
+        <a href="!SignIn.html">
+            <div class="sn">
+            <div class="snb">
+                <i class='bx bxs-user'></i>
+                <h3>CLARA</h3>
+            </div>
             </div>
         </a>
-    </div>
-    <a href="!SignIn.html">
-      <div class="sn">
-        <div class="snb">
-          <i class='bx bxs-user'></i>
-          <h3>CLARA</h3>
+        <!-- เพิ่มปุ่มเมนูด้านขวา -->
+        <div class="dropdown-container">
+            <button id="menuToggle" class="menu-btn"><i class='bx bx-menu'></i></button>
+            <div id="dropdownMenu" class="dropdown-menu">
+            <a href="/tele">TeleMed</a>
+            <a href="/spec">Spectro</a>
+            <a href="/info">Info</a>
+            </div>
         </div>
-      </div>
-    </a>
-    <div class="dropdown-container">
-        <button id="menuToggle" class="menu-btn"><i class='bx bx-menu'></i></button>
-        <div id="dropdownMenu" class="dropdown-menu">
-        <a href="http://127.0.0.1:5000/templates/tele.html"><h3>โรงพยาบาล</h3></a>
-        <a href="http://127.0.0.1:5000/templates/spec.html"><h3>กราฟ</h3></a>
-        <a href="http://127.0.0.1:5000/templates/info.html"><h3>ข้อมูล</h3></a>
-    </div>
-  </nav>
+    </nav>
   <div class="hello">
     <div class="container mx-auto p-4 md:p-8 max-w-7xl">
 
