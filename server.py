@@ -43,76 +43,73 @@ def predict():
     
     return jsonify({"stage": int(prediction[0])})
 
+# Web pages
 @app.route("/")
 def index():
     return render_template("index.html")
 
 @app.route("/screenAu")
-def screen_au():
+def screen_au_page():
     return render_template("screenAu.html")
 
 @app.route("/SignIn")
-def screen_au():
+def sign_in_page():
     return render_template("!SignIn.html")
 
 @app.route("/Chat")
-def screen_au():
+def chat_page():
     return render_template("chat.html")
 
 @app.route("/eform")
-def screen_au():
+def eform_page():
     return render_template("eform.html")
 
 @app.route("/form")
-def screen_au():
+def form_page():
     return render_template("form.html")
 
 @app.route("/history")
-def screen_au():
+def history_page():
     return render_template("history.html")
 
 @app.route("/home")
-def screen_au():
-    return render_template("home.html")
-
-@app.route("/home")
-def screen_au():
+def home_page():
     return render_template("home.html")
 
 @app.route("/info-th")
-def screen_au():
+def info_th_page():
     return render_template("info-th.html")
 
 @app.route("/info")
-def screen_au():
+def info_page():
     return render_template("info.html")
 
 @app.route("/r0")
-def screen_au():
+def r0_page():
     return render_template("r0.html")
 
 @app.route("/r1")
-def screen_au():
+def r1_page():
     return render_template("r1.html")
 
 @app.route("/r2")
-def screen_au():
+def r2_page():
     return render_template("r2.html")
 
 @app.route("/spec")
-def screen_au():
+def spec_page():
     return render_template("spec.html")
 
 @app.route("/tele")
-def screen_au():
+def tele_page():
     return render_template("tele.html")
 
 @app.route("/tele2")
-def screen_au():
+def tele2_page():
     return render_template("tele2.html")
 
 @app.route("/tele3")
-def screen_au():
+def tele3_page():
     return render_template("tele3.html")
 
 if __name__ == "__main__":
